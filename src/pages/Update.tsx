@@ -107,7 +107,7 @@ const [timeTo, setTimeTo] = useState<string>("");
   return (
     <div className="flex min-h-screen w-full overflow-x-hidden">
       <Sidebar />
-      <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
+      <main className="flex-1 p-6 space-y-6">
         <PageHeader title="Update" description="Suchen und markieren Sie Testergebnisse zur Aktualisierung." />
 
 <section className="flex flex-wrap items-end gap-3 md:gap-4">
@@ -215,8 +215,8 @@ const [timeTo, setTimeTo] = useState<string>("");
             </div>
           </CardHeader>
           <CardContent className="max-w-full">
-            <div className="overflow-x-auto">
-              <Table className="min-w-[150vw]">
+            <div className="overflow-auto max-h-[70vh]">
+              <Table className="min-w-[1200px]">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Test</TableHead>

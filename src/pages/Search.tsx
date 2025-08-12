@@ -158,7 +158,7 @@ const Search = () => {
     <div className="min-h-screen bg-background flex">
       <Sidebar />
       
-      <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
+      <main className="flex-1 p-6 space-y-6">
         <PageHeader title="Suche" description="Durchsuchen Sie Patientendaten und Testergebnisse." />
 
         {/* Search Forms */}
@@ -325,8 +325,8 @@ const Search = () => {
               </TabsList>
               
               <TabsContent value="kompakt">
-                <div className="overflow-x-auto max-w-full">
-                  <Table className="min-w-[150vw]">
+                <div className="overflow-auto max-w-full max-h-[70vh]">
+                  <Table className="min-w-[1200px]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>
@@ -354,8 +354,8 @@ const Search = () => {
               </TabsContent>
               
               <TabsContent value="erweitert">
-                <div className="overflow-x-auto max-w-full">
-                  <Table className="min-w-[150vw]">
+                <div className="overflow-auto max-w-full max-h-[70vh]">
+                  <Table className="min-w-[1200px]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>
