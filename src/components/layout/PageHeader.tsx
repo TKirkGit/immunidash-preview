@@ -1,6 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Info } from "lucide-react";
 
 interface PageHeaderProps {
@@ -26,7 +29,42 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, description }) => {
           </TooltipTrigger>
           <TooltipContent>Informationen</TooltipContent>
         </Tooltip>
-        <Button>Anmelden</Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>Anmelden</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Anmelden</DialogTitle>
+              <DialogDescription>
+                Bitte Zugangsdaten eingeben.
+              </DialogDescription>
+            </DialogHeader>
+            <form
+              className="space-y-4"
+              onSubmit={(e) => {
+                e.preventDefault();
+                // TODO: Implement real authentication (Supabase) später
+                console.log("Login submitted");
+              }}
+            >
+              <div className="space-y-2">
+                <Label htmlFor="email">E-Mail</Label>
+                <Input id="email" type="email" placeholder="name@beispiel.de" required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="password">Passwort</Label>
+                <Input id="password" type="password" placeholder="••••••••" required />
+              </div>
+              <DialogFooter>
+                <DialogClose asChild>
+                  <Button type="button" variant="outline">Abbrechen</Button>
+                </DialogClose>
+                <Button type="submit">Anmelden</Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
     </header>
   );
