@@ -3,6 +3,7 @@ import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { 
   Select,
   SelectContent,
@@ -18,7 +19,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Search, Calendar, Filter } from "lucide-react";
+import { Search, Calendar } from "lucide-react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -78,6 +79,15 @@ const Tests = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<typeof MOCK_TESTS>([]);
   const [loading, setLoading] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const handleUpdate = async () => {
+    setLoading(true);
+    const res = await fakeServerSearch(query);
+    setResults(res);
+    setLoading(false);
+    setRefreshKey((k) => k + 1);
+  };
 
   // SEO: Title, Meta, Canonical
   useEffect(() => {
@@ -102,7 +112,7 @@ const Tests = () => {
   }, []);
 
   // Daten für Diagramme basierend auf Zeitraum
-  const dailyData = useMemo(() => buildMockDailyData(parseInt(timeframe, 10)), [timeframe]);
+  const dailyData = useMemo(() => buildMockDailyData(parseInt(timeframe, 10)), [timeframe, refreshKey]);
 
   // Simulierte serverseitige Suche (Debounce)
   useEffect(() => {
@@ -128,20 +138,27 @@ const Tests = () => {
             <h1 className="text-3xl font-bold text-foreground">Tests Dashboard</h1>
             <p className="text-muted-foreground">Suchen, analysieren und überwachen Sie Labor‑Tests.</p>
           </div>
+        </header>
 
-          <div className="flex items-center gap-3">
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="space-y-2">
+            <Label htmlFor="test-search">Suche nach Test</Label>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
+                id="test-search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Test nach Name oder ID suchen..."
-                className="pl-10 w-72"
+                className="pl-10"
                 aria-label="Tests suchen"
               />
             </div>
+          </div>
+          <div className="space-y-2">
+            <Label>Zeitraum</Label>
             <Select value={timeframe} onValueChange={setTimeframe}>
-              <SelectTrigger className="w-40">
+              <SelectTrigger className="w-full">
                 <Calendar className="mr-2 h-4 w-4" />
                 <SelectValue placeholder="Zeitraum" />
               </SelectTrigger>
@@ -151,12 +168,11 @@ const Tests = () => {
                 <SelectItem value="90">Letzte 90 Tage</SelectItem>
               </SelectContent>
             </Select>
-            <Button variant="outline">
-              <Filter className="h-4 w-4 mr-2" />
-              Filter
-            </Button>
           </div>
-        </header>
+          <div className="flex items-end">
+            <Button onClick={handleUpdate} className="w-full md:w-auto">Aktualisieren</Button>
+          </div>
+        </section>
 
         {/* Charts */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
