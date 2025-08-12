@@ -230,79 +230,83 @@ const Search = () => {
               </TabsList>
               
               <TabsContent value="kompakt">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>PID</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Barcode</TableHead>
-                      <TableHead>Geschlecht</TableHead>
-                      <TableHead>Anzahl Tests</TableHead>
-                      <TableHead>Zeit</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {searchResults.map((result, index) => (
-                      <TableRow key={index}>
-                        <TableCell className="font-medium">{result.pid}</TableCell>
-                        <TableCell>{result.name}</TableCell>
-                        <TableCell>{result.barcode}</TableCell>
-                        <TableCell>{result.geschlecht}</TableCell>
-                        <TableCell>{result.anzahlTests}</TableCell>
-                        <TableCell>{result.zeit}</TableCell>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>PID</TableHead>
+                        <TableHead>Name</TableHead>
+                        <TableHead>Barcode</TableHead>
+                        <TableHead>Geschlecht</TableHead>
+                        <TableHead>Anzahl Tests</TableHead>
+                        <TableHead>Zeit</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {searchResults.map((result, index) => (
+                        <TableRow key={index}>
+                          <TableCell className="font-medium">{result.pid}</TableCell>
+                          <TableCell>{result.name}</TableCell>
+                          <TableCell>{result.barcode}</TableCell>
+                          <TableCell>{result.geschlecht}</TableCell>
+                          <TableCell>{result.anzahlTests}</TableCell>
+                          <TableCell>{result.zeit}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               </TabsContent>
               
               <TabsContent value="erweitert">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>PID</TableHead>
-                      <TableHead>Barcode</TableHead>
-                      <TableHead>Test</TableHead>
-                      <TableHead>Wert</TableHead>
-                      <TableHead>Einheit</TableHead>
-                      <TableHead>Zeit</TableHead>
-                      <TableHead>Gerät</TableHead>
-                      <TableHead>Flag</TableHead>
-                      <TableHead>Labnr</TableHead>
-                      <TableHead>Barcodezusatz</TableHead>
-                      <TableHead>Arzt</TableHead>
-                      <TableHead>Material</TableHead>
-                      <TableHead>Nachname</TableHead>
-                      <TableHead>Vorname</TableHead>
-                      <TableHead>Geschlecht</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {searchResults.map((result, index) => (
-                      <TableRow key={index}>
-                        <TableCell className="font-medium">{result.pid}</TableCell>
-                        <TableCell>{result.barcode}</TableCell>
-                        <TableCell>{result.test}</TableCell>
-                        <TableCell>{result.wert}</TableCell>
-                        <TableCell>{result.einheit}</TableCell>
-                        <TableCell>{result.zeit}</TableCell>
-                        <TableCell>{result.geraeteId}</TableCell>
-                        <TableCell>
-                          <Badge variant={result.flag === "Normal" ? "secondary" : "destructive"}>
-                            {result.flag}
-                          </Badge>
-                        </TableCell>
-                        <TableCell>{result.labnr}</TableCell>
-                        <TableCell>{result.barcodezusatz}</TableCell>
-                        <TableCell>{result.arztKuerzel}</TableCell>
-                        <TableCell>{result.material}</TableCell>
-                        <TableCell>{result.nachname}</TableCell>
-                        <TableCell>{result.vorname}</TableCell>
-                        <TableCell>{result.geschlecht}</TableCell>
+                <div className="overflow-x-auto">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>PID</TableHead>
+                        <TableHead>Barcode</TableHead>
+                        <TableHead>Test</TableHead>
+                        <TableHead>Wert</TableHead>
+                        <TableHead>Einheit</TableHead>
+                        <TableHead>Zeit</TableHead>
+                        <TableHead>Gerät</TableHead>
+                        <TableHead>Flag</TableHead>
+                        <TableHead>Labnr</TableHead>
+                        <TableHead>Barcodezusatz</TableHead>
+                        <TableHead>Arzt</TableHead>
+                        <TableHead>Material</TableHead>
+                        <TableHead>Nachname</TableHead>
+                        <TableHead>Vorname</TableHead>
+                        <TableHead>Geschlecht</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {searchResults.map((result, index) => (
+                        <TableRow key={index}>
+                          <TableCell className="font-medium">{result.pid}</TableCell>
+                          <TableCell>{result.barcode}</TableCell>
+                          <TableCell>{result.test}</TableCell>
+                          <TableCell>{result.wert}</TableCell>
+                          <TableCell>{result.einheit}</TableCell>
+                          <TableCell>{result.zeit}</TableCell>
+                          <TableCell>{result.geraeteId}</TableCell>
+                          <TableCell>
+                            <Badge variant={result.flag === "Normal" ? "secondary" : "destructive"}>
+                              {result.flag}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{result.labnr}</TableCell>
+                          <TableCell>{result.barcodezusatz}</TableCell>
+                          <TableCell>{result.arztKuerzel}</TableCell>
+                          <TableCell>{result.material}</TableCell>
+                          <TableCell>{result.nachname}</TableCell>
+                          <TableCell>{result.vorname}</TableCell>
+                          <TableCell>{result.geschlecht}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
               </TabsContent>
             </Tabs>
           </CardContent>
