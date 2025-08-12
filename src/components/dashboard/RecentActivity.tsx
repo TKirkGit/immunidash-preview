@@ -55,8 +55,5 @@ const statusConfig = {
   }
 };
 export function RecentActivity() {
-  return <Card>
-      
-      
-    </Card>;
+  return;
 }
