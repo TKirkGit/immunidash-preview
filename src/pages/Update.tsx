@@ -14,7 +14,8 @@ import { Search, Calendar, Clock } from "lucide-react";
 const Update = () => {
 const [query, setQuery] = useState("");
 const [timeframe, setTimeframe] = useState<string>("7");
-const [time, setTime] = useState<string>("");
+const [timeFrom, setTimeFrom] = useState<string>("");
+const [timeTo, setTimeTo] = useState<string>("");
   // Mock data for the table
   const [testResults, setTestResults] = useState([
     {
@@ -65,7 +66,7 @@ const [time, setTime] = useState<string>("");
   ]);
 
   const handleSearch = () => {
-    console.log("Suche ausgeführt mit:", { query, timeframe, time });
+    console.log("Suche ausgeführt mit:", { query, timeframe, timeFrom, timeTo });
   };
 
   const handleStatusUpdate = (id: number) => {
@@ -109,8 +110,8 @@ const [time, setTime] = useState<string>("");
       <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
         <PageHeader title="Update" description="Suchen und markieren Sie Testergebnisse zur Aktualisierung." />
 
-<section className="grid grid-cols-1 md:grid-cols-4 gap-4">
-  <div className="space-y-2">
+<section className="grid grid-cols-1 md:grid-cols-12 gap-4">
+  <div className="space-y-2 md:col-span-4">
     <Label htmlFor="update-search">Suche</Label>
     <div className="relative">
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -124,7 +125,7 @@ const [time, setTime] = useState<string>("");
       />
     </div>
   </div>
-  <div className="space-y-2">
+  <div className="space-y-2 md:col-span-3">
     <Label>Zeitraum</Label>
     <Select value={timeframe} onValueChange={setTimeframe}>
       <SelectTrigger className="w-full">
@@ -138,21 +139,35 @@ const [time, setTime] = useState<string>("");
       </SelectContent>
     </Select>
   </div>
-  <div className="space-y-2">
-    <Label htmlFor="update-time">Uhrzeit</Label>
+  <div className="space-y-2 md:col-span-2">
+    <Label htmlFor="update-time-from">Von</Label>
     <div className="relative">
       <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
       <Input
-        id="update-time"
+        id="update-time-from"
         type="time"
-        value={time}
-        onChange={(e) => setTime(e.target.value)}
+        value={timeFrom}
+        onChange={(e) => setTimeFrom(e.target.value)}
         className="pl-10"
-        aria-label="Uhrzeit auswählen"
+        aria-label="Uhrzeit von"
       />
     </div>
   </div>
-  <div className="flex items-end">
+  <div className="space-y-2 md:col-span-2">
+    <Label htmlFor="update-time-to">Bis</Label>
+    <div className="relative">
+      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <Input
+        id="update-time-to"
+        type="time"
+        value={timeTo}
+        onChange={(e) => setTimeTo(e.target.value)}
+        className="pl-10"
+        aria-label="Uhrzeit bis"
+      />
+    </div>
+  </div>
+  <div className="flex items-end md:col-span-1 md:justify-end">
     <Button onClick={handleSearch} className="w-full md:w-auto">Suchen</Button>
   </div>
 </section>
