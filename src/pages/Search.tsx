@@ -72,65 +72,87 @@ const downloadSearchResultsXLSX = (results: any[]) => {
 
 const Search = () => {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
-  const [searchResults] = useState([
-    {
-      pid: "P001234",
-      vorname: "Max",
-      nachname: "Mustermann",
-      name: "Max Mustermann",
-      barcode: "BC001234",
-      geschlecht: "M",
-      anzahlTests: 5,
-      zeit: "2024-01-15 14:30",
-      test: "Blutbild",
-      wert: "12.5",
-      einheit: "g/dl",
-      geraeteId: "GER001",
-      flag: "Normal",
-      labnr: "L001",
-      barcodezusatz: "A1",
-      arztKuerzel: "Dr.M",
-      material: "Blut"
-    },
-    {
-      pid: "P001235",
-      vorname: "Anna",
-      nachname: "Schmidt",
-      name: "Anna Schmidt",
-      barcode: "BC001235",
-      geschlecht: "W",
-      anzahlTests: 3,
-      zeit: "2024-01-14 10:15",
-      test: "Urinanalyse",
-      wert: "1.2",
-      einheit: "mg/ml",
-      geraeteId: "GER002",
-      flag: "Auffällig",
-      labnr: "L002",
-      barcodezusatz: "B2",
-      arztKuerzel: "Dr.K",
-      material: "Urin"
-    },
-    {
-      pid: "P001236",
-      vorname: "Peter",
-      nachname: "Weber",
-      name: "Peter Weber",
-      barcode: "BC001236",
-      geschlecht: "M",
-      anzahlTests: 2,
-      zeit: "2024-01-13 16:45",
-      test: "Stuhlanalyse",
-      wert: "Negativ",
-      einheit: "-",
-      geraeteId: "GER001",
-      flag: "Normal",
-      labnr: "L003",
-      barcodezusatz: "C3",
-      arztKuerzel: "Dr.M",
-      material: "Stuhl"
-    }
-  ]);
+  const [searchResults] = useState(() => {
+    const base = [
+      {
+        pid: "P001234",
+        vorname: "Max",
+        nachname: "Mustermann",
+        name: "Max Mustermann",
+        barcode: "BC001234",
+        geschlecht: "M",
+        anzahlTests: 5,
+        zeit: "2024-01-15 14:30",
+        test: "Blutbild",
+        wert: "12.5",
+        einheit: "g/dl",
+        geraeteId: "GER001",
+        flag: "Normal",
+        labnr: "L001",
+        barcodezusatz: "A1",
+        arztKuerzel: "Dr.M",
+        material: "Blut"
+      },
+      {
+        pid: "P001235",
+        vorname: "Anna",
+        nachname: "Schmidt",
+        name: "Anna Schmidt",
+        barcode: "BC001235",
+        geschlecht: "W",
+        anzahlTests: 3,
+        zeit: "2024-01-14 10:15",
+        test: "Urinanalyse",
+        wert: "1.2",
+        einheit: "mg/ml",
+        geraeteId: "GER002",
+        flag: "Auffällig",
+        labnr: "L002",
+        barcodezusatz: "B2",
+        arztKuerzel: "Dr.K",
+        material: "Urin"
+      },
+      {
+        pid: "P001236",
+        vorname: "Peter",
+        nachname: "Weber",
+        name: "Peter Weber",
+        barcode: "BC001236",
+        geschlecht: "M",
+        anzahlTests: 2,
+        zeit: "2024-01-13 16:45",
+        test: "Stuhlanalyse",
+        wert: "Negativ",
+        einheit: "-",
+        geraeteId: "GER001",
+        flag: "Normal",
+        labnr: "L003",
+        barcodezusatz: "C3",
+        arztKuerzel: "Dr.M",
+        material: "Stuhl"
+      }
+    ];
+    const more = Array.from({ length: 120 }, (_, i) => ({
+      pid: `P${(1237 + i).toString().padStart(6, '0')}`,
+      vorname: i % 2 === 0 ? "Julia" : "Lukas",
+      nachname: i % 3 === 0 ? "Meyer" : "Klein",
+      name: i % 2 === 0 ? `Julia ${i % 3 === 0 ? 'Meyer' : 'Klein'}` : `Lukas ${i % 3 === 0 ? 'Meyer' : 'Klein'}`,
+      barcode: `BC${(1236 + i).toString().padStart(6, '0')}`,
+      geschlecht: i % 2 === 0 ? "W" : "M",
+      anzahlTests: (i % 7) + 1,
+      zeit: `2024-02-${(i % 28) + 1} ${(8 + (i % 10)).toString().padStart(2,'0')}:${(i % 60).toString().padStart(2,'0')}`,
+      test: i % 2 === 0 ? "CRP" : "Glukose",
+      wert: (Math.random() * 20).toFixed(1),
+      einheit: i % 2 === 0 ? "mg/L" : "mmol/L",
+      geraeteId: i % 2 === 0 ? "GER003" : "GER004",
+      flag: i % 5 === 0 ? "Auffällig" : "Normal",
+      labnr: `L${(200 + i)}`,
+      barcodezusatz: i % 4 === 0 ? "D4" : "E5",
+      arztKuerzel: i % 2 === 0 ? "Dr.S" : "Dr.T",
+      material: i % 2 === 0 ? "Blut" : "Serum"
+    }));
+    return [...base, ...more];
+  });
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -304,7 +326,7 @@ const Search = () => {
               
               <TabsContent value="kompakt">
                 <div className="overflow-x-auto max-w-full">
-                  <Table className="min-w-max">
+                  <Table className="min-w-[1200px]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>
@@ -333,7 +355,7 @@ const Search = () => {
               
               <TabsContent value="erweitert">
                 <div className="overflow-x-auto max-w-full">
-                  <Table className="min-w-max">
+                  <Table className="min-w-[1200px]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>

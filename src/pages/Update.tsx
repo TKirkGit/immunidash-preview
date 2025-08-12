@@ -216,7 +216,7 @@ const [timeTo, setTimeTo] = useState<string>("");
           </CardHeader>
           <CardContent className="max-w-full">
             <div className="overflow-x-auto">
-              <Table className="min-w-max">
+              <Table className="min-w-[1200px]">
                 <TableHeader>
                   <TableRow>
                     <TableHead>Test</TableHead>
