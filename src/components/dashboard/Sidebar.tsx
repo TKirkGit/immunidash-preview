@@ -46,9 +46,7 @@ export function Sidebar({
   return <div className={cn("bg-card border-r transition-all duration-300 relative", collapsed ? "w-16" : "w-64", className)}>
       <div className="p-6 border-b">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold">
-            G
-          </div>
+          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold">H</div>
           {!collapsed && <div>
               <h2 className="font-bold text-lg text-foreground">HL7Viewer</h2>
               <p className="text-xs text-muted-foreground">Dashboard</p>
