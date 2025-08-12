@@ -1,38 +1,39 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import {
-  LayoutDashboard,
-  Users,
-  TestTubes,
-  FileText,
-  Calendar,
-  Settings,
-  Activity,
-  TrendingUp,
-  UserCheck,
-  ChevronLeft,
-  ChevronRight,
-  Search,
-  Cpu
-} from "lucide-react";
+import { LayoutDashboard, Users, TestTubes, FileText, Calendar, Settings, Activity, TrendingUp, UserCheck, ChevronLeft, ChevronRight, Search, Cpu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-const navItems = [
-  { href: "/", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/patients", label: "Patienten", icon: Users },
-  { href: "/search", label: "Suche", icon: Search },
-  { href: "/update", label: "Update", icon: TrendingUp },
-  { href: "/tests", label: "Tests", icon: TestTubes },
-  { href: "/geraete", label: "Geräte", icon: Cpu },
-
-];
-
+const navItems = [{
+  href: "/",
+  label: "Dashboard",
+  icon: LayoutDashboard
+}, {
+  href: "/patients",
+  label: "Patienten",
+  icon: Users
+}, {
+  href: "/search",
+  label: "Suche",
+  icon: Search
+}, {
+  href: "/update",
+  label: "Update",
+  icon: TrendingUp
+}, {
+  href: "/tests",
+  label: "Tests",
+  icon: TestTubes
+}, {
+  href: "/geraete",
+  label: "Geräte",
+  icon: Cpu
+}];
 interface SidebarProps {
   className?: string;
 }
-
-export function Sidebar({ className }: SidebarProps) {
+export function Sidebar({
+  className
+}: SidebarProps) {
   const STORAGE_KEY = "sidebar:collapsed";
   const [collapsed, setCollapsed] = useState<boolean>(() => {
     try {
@@ -42,75 +43,44 @@ export function Sidebar({ className }: SidebarProps) {
     }
   });
   const location = useLocation();
-
-  return (
-    <div className={cn(
-      "bg-card border-r transition-all duration-300 relative",
-      collapsed ? "w-16" : "w-64",
-      className
-    )}>
+  return <div className={cn("bg-card border-r transition-all duration-300 relative", collapsed ? "w-16" : "w-64", className)}>
       <div className="p-6 border-b">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold">
             G
           </div>
-          {!collapsed && (
-            <div>
-              <h2 className="font-bold text-lg text-foreground">GANZIMMUN</h2>
+          {!collapsed && <div>
+              <h2 className="font-bold text-lg text-foreground">HL7Viewer</h2>
               <p className="text-xs text-muted-foreground">Dashboard</p>
-            </div>
-          )}
+            </div>}
         </div>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => {
-            const next = !collapsed;
-            setCollapsed(next);
-            try {
-              localStorage.setItem(STORAGE_KEY, next ? "1" : "0");
-            } catch {}
-          }}
-          className="absolute -right-3 top-6 h-6 w-6 rounded-full border bg-background"
-        >
+        <Button variant="ghost" size="sm" onClick={() => {
+        const next = !collapsed;
+        setCollapsed(next);
+        try {
+          localStorage.setItem(STORAGE_KEY, next ? "1" : "0");
+        } catch {}
+      }} className="absolute -right-3 top-6 h-6 w-6 rounded-full border bg-background">
           {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
         </Button>
       </div>
       
       <nav className="p-4 space-y-2">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const isActive = location.pathname === item.href;
-          
-          return (
-            <Link
-              key={item.href}
-              to={item.href}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2 rounded-lg transition-colors",
-                "hover:bg-accent hover:text-accent-foreground",
-                isActive && "bg-primary text-primary-foreground",
-                collapsed && "justify-center"
-              )}
-            >
+        {navItems.map(item => {
+        const Icon = item.icon;
+        const isActive = location.pathname === item.href;
+        return <Link key={item.href} to={item.href} className={cn("flex items-center gap-3 px-3 py-2 rounded-lg transition-colors", "hover:bg-accent hover:text-accent-foreground", isActive && "bg-primary text-primary-foreground", collapsed && "justify-center")}>
               <Icon className="h-5 w-5 flex-shrink-0" />
               {!collapsed && <span className="text-sm font-medium">{item.label}</span>}
-            </Link>
-          );
-        })}
+            </Link>;
+      })}
       </nav>
 
       <div className="absolute bottom-4 left-4 right-4">
-        <Link to="/settings" className={cn(
-          "flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-accent/90 transition-colors",
-          collapsed && "justify-center"
-        )}>
+        <Link to="/settings" className={cn("flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-accent/90 transition-colors", collapsed && "justify-center")}>
           <Settings className="h-5 w-5 text-accent-foreground" />
-          {!collapsed && (
-            <span className="text-sm font-medium text-accent-foreground">Einstellungen</span>
-          )}
+          {!collapsed && <span className="text-sm font-medium text-accent-foreground">Einstellungen</span>}
         </Link>
       </div>
-    </div>
-  );
+    </div>;
 }
