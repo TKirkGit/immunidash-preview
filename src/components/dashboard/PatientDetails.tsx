@@ -216,7 +216,7 @@ export const PatientDetails = ({ patientId }: PatientDetailsProps) => {
     );
   }
 
-  return (
+return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Patient Grunddaten */}
@@ -314,21 +314,21 @@ export const PatientDetails = ({ patientId }: PatientDetailsProps) => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b">
-                  <th className="text-left p-2 text-muted-foreground font-medium">PID</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Name</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Vorname</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Geschlecht</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Barcode</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Test</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Wert</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Einheit</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Zeit</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Gerät</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Flag</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Labnr</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Barcodezusatz</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Arztkürzel</th>
-                  <th className="text-left p-2 text-muted-foreground font-medium">Material</th>
+                  <th className="p-2">PID</th>
+                  <th className="p-2">Name</th>
+                  <th className="p-2">Vorname</th>
+                  <th className="p-2">Geschlecht</th>
+                  <th className="p-2">Barcode</th>
+                  <th className="p-2">Test</th>
+                  <th className="p-2">Wert</th>
+                  <th className="p-2">Einheit</th>
+                  <th className="p-2">Zeit</th>
+                  <th className="p-2">Gerät</th>
+                  <th className="p-2">Flag</th>
+                  <th className="p-2">Labnr</th>
+                  <th className="p-2">Barcodezusatz</th>
+                  <th className="p-2">Arztkürzel</th>
+                  <th className="p-2">Material</th>
                 </tr>
               </thead>
               <tbody>

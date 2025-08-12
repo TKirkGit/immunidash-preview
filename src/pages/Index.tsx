@@ -3,6 +3,13 @@ import { StatsCard } from "@/components/dashboard/StatsCard";
 import { TestResultsChart } from "@/components/dashboard/TestResultsChart";
 import { RevenueChart } from "@/components/dashboard/RevenueChart";
 import { RecentAppointments } from "@/components/dashboard/RecentAppointments";
+import { DeviceUtilizationChart } from "@/components/dashboard/DeviceUtilizationChart";
+import { RecentAnomalies } from "@/components/dashboard/RecentAnomalies";
+import { StabilityExceeded } from "@/components/dashboard/StabilityExceeded";
+import { FastestTestRun } from "@/components/dashboard/FastestTestRun";
+import { SlowestTestRun } from "@/components/dashboard/SlowestTestRun";
+
+
 import {
   Users, 
   TestTubes, 
@@ -53,10 +60,13 @@ const Index = () => {
         </div>
 
         {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <TestResultsChart />
           <RevenueChart />
-          <RecentAppointments />
+          <RecentAnomalies />
+          <StabilityExceeded />
+          <FastestTestRun />
+          <SlowestTestRun />
         </div>
 
       </main>

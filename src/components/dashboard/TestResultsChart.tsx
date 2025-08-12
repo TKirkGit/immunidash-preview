@@ -4,6 +4,8 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Toolti
 import { TrendingUp } from "lucide-react";
 import ChartTableSwitch from "@/components/common/ChartTableSwitch";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+// NEU
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const data = [
   { name: "Mo", tests: 45, completed: 42 },
@@ -19,7 +21,8 @@ export function TestResultsChart() {
   const [mode, setMode] = useState<"chart" | "table">("chart");
 
   return (
-    <Card className="col-span-2">
+    // NEU: feste Höhe + Flex-Spalte, damit der Contentbereich sauber scrollen darf
+    <Card className="col-span-2 h-[420px] flex flex-col">
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <TrendingUp className="h-5 w-5 text-primary" />
@@ -27,64 +30,57 @@ export function TestResultsChart() {
         </CardTitle>
         <ChartTableSwitch mode={mode} onChange={setMode} ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
       </CardHeader>
-      <CardContent className="graph-big">
+
+      {/* NEU: min-h-0 ist entscheidend, sonst kein Overflow -> keine Scrollbar */}
+      <CardContent className="flex-1 min-h-0">
         {mode === "chart" ? (
-          <div className="graph-content">
+          <div className="h-full">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis 
-                  dataKey="name" 
-                  stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
-                />
-                <YAxis 
-                  stroke="hsl(var(--muted-foreground))"
-                  fontSize={12}
-                />
-                <Tooltip 
+                <XAxis dataKey="name" stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <YAxis stroke="hsl(var(--muted-foreground))" fontSize={12} />
+                <Tooltip
                   contentStyle={{
                     backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border))",
-                    borderRadius: "8px"
+                    borderRadius: "8px",
                   }}
                 />
-                <Bar 
-                  dataKey="tests" 
-                  fill="hsl(var(--primary))"
-                  name="Tests gesamt"
-                  radius={[4, 4, 0, 0]}
-                />
-                <Bar 
-                  dataKey="completed" 
-                  fill="hsl(var(--success))"
-                  name="Abgeschlossen"
-                  radius={[4, 4, 0, 0]}
-                />
+                <Bar dataKey="tests" fill="hsl(var(--primary))" name="Tests gesamt" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="completed" fill="hsl(var(--secondary-purple))" name="Abgeschlossen" radius={[4, 4, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="graph-content graph-scroll max-w-full">
-            <Table aria-label="Wöchentliche Teststatistiken Tabelle">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Tag</TableHead>
-                  <TableHead>Tests gesamt</TableHead>
-                  <TableHead>Abgeschlossen</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {data.map((d) => (
-                  <TableRow key={d.name}>
-                    <TableCell>{d.name}</TableCell>
-                    <TableCell>{d.tests}</TableCell>
-                    <TableCell>{d.completed}</TableCell>
+          // NEU: sleek Scrollbars via Radix – vertikal & horizontal
+          <ScrollArea className="h-full w-full" type="auto">
+            {/* min-w sorgt dafür, dass bei vielen Spalten horizontal gescrollt wird */}
+            <div className="min-w-[720px] pr-1">
+              <Table aria-label="Wöchentliche Teststatistiken Tabelle">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Tag</TableHead>
+                    <TableHead>Tests gesamt</TableHead>
+                    <TableHead>Abgeschlossen</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+                </TableHeader>
+                <TableBody>
+                  {data.map((d) => (
+                    <TableRow key={d.name}>
+                      <TableCell>{d.name}</TableCell>
+                      <TableCell>{d.tests}</TableCell>
+                      <TableCell>{d.completed}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+
+            {/* Beide Scrollbars (Horizontal + Vertikal) */}
+            <ScrollBar orientation="vertical" />
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
         )}
       </CardContent>
     </Card>

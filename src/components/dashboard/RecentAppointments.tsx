@@ -1,48 +1,14 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Clock } from "lucide-react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const appointments = [
-  {
-    id: 1,
-    patient: "Maria Schmidt",
-    time: "09:00",
-    type: "Bluttest",
-    status: "Bestätigt",
-    priority: "normal"
-  },
-  {
-    id: 2,
-    patient: "Hans Müller",
-    time: "10:30",
-    type: "Urinanalyse",
-    status: "Wartend",
-    priority: "hoch"
-  },
-  {
-    id: 3,
-    patient: "Anna Weber",
-    time: "11:15",
-    type: "Röntgen",
-    status: "In Bearbeitung",
-    priority: "normal"
-  },
-  {
-    id: 4,
-    patient: "Klaus Fischer",
-    time: "14:00",
-    type: "MRT",
-    status: "Bestätigt",
-    priority: "niedrig"
-  },
-  {
-    id: 5,
-    patient: "Eva Braun",
-    time: "15:30",
-    type: "CT-Scan",
-    status: "Wartend",
-    priority: "hoch"
-  }
+  { id: 1, patient: "Maria Schmidt", time: "09:00", type: "Bluttest", status: "Bestätigt", priority: "normal" },
+  { id: 2, patient: "Hans Müller", time: "10:30", type: "Urinanalyse", status: "Wartend", priority: "hoch" },
+  { id: 3, patient: "Anna Weber", time: "11:15", type: "Röntgen", status: "In Bearbeitung", priority: "normal" },
+  { id: 4, patient: "Klaus Fischer", time: "14:00", type: "MRT", status: "Bestätigt", priority: "niedrig" },
+  { id: 5, patient: "Eva Braun", time: "15:30", type: "CT-Scan", status: "Wartend", priority: "hoch" },
 ];
 
 const getStatusColor = (status: string) => {
@@ -60,40 +26,44 @@ const getStatusColor = (status: string) => {
 
 export function RecentAppointments() {
   return (
-    <Card>
+    <Card className="h-[360px] flex flex-col">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base font-semibold flex items-center gap-2">
           <CalendarDays className="h-5 w-5 text-primary" />
           Heutige Termine
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
-          {appointments.map((appointment) => (
-            <div
-              key={appointment.id}
-              className="flex items-center justify-between p-3 rounded-lg border bg-muted/30"
-            >
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Clock className="h-3 w-3" />
-                  {appointment.time}
-                </div>
-                <div>
-                  <p className="font-medium text-sm">{appointment.patient}</p>
-                  <p className="text-xs text-muted-foreground">{appointment.type}</p>
-                </div>
-              </div>
-              <Badge
-                variant="secondary"
-                className={getStatusColor(appointment.status)}
+
+      {/* flex-1 + min-h-0 erlaubt Scrollen bei Overflow */}
+      <CardContent className="flex-1 min-h-0 p-0">
+        <ScrollArea className="h-full w-full" type="auto">
+          <div className="space-y-3 px-4 py-4">
+            {appointments.map((appointment) => (
+              <div
+                key={appointment.id}
+                className="flex items-center justify-between p-3 rounded-lg border bg-muted/30"
               >
-                {appointment.status}
-              </Badge>
-            </div>
-          ))}
-        </div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <Clock className="h-3 w-3" />
+                    {appointment.time}
+                  </div>
+                  <div>
+                    <p className="font-medium text-sm">{appointment.patient}</p>
+                    <p className="text-xs text-muted-foreground">{appointment.type}</p>
+                  </div>
+                </div>
+                <Badge variant="secondary" className={getStatusColor(appointment.status)}>
+                  {appointment.status}
+                </Badge>
+              </div>
+            ))}
+          </div>
+          <ScrollBar orientation="vertical" />
+        </ScrollArea>
       </CardContent>
     </Card>
   );
 }
+
+export default RecentAppointments;
