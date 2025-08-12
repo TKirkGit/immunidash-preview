@@ -326,7 +326,7 @@ const Search = () => {
               
               <TabsContent value="kompakt">
                 <div className="overflow-x-auto max-w-full">
-                  <Table className="min-w-[1200px]">
+                  <Table className="min-w-[150vw]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>
@@ -355,7 +355,7 @@ const Search = () => {
               
               <TabsContent value="erweitert">
                 <div className="overflow-x-auto max-w-full">
-                  <Table className="min-w-[1200px]">
+                  <Table className="min-w-[150vw]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>
