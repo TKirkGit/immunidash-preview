@@ -1,6 +1,5 @@
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { StatsCard } from "@/components/dashboard/StatsCard";
-import { RecentActivity } from "@/components/dashboard/RecentActivity";
 import { TestResultsChart } from "@/components/dashboard/TestResultsChart";
 import { PatientTable } from "@/components/dashboard/PatientTable";
 import { 
@@ -83,13 +82,6 @@ const Index = () => {
           <PatientTable />
         </div>
 
-        {/* Activity Feed */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            {/* This space could be used for additional charts or content */}
-          </div>
-          <RecentActivity />
-        </div>
       </main>
     </div>
   );
