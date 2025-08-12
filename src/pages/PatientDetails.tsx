@@ -5,6 +5,102 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, User, TestTube, Calendar, Barcode } from "lucide-react";
 
 // Mock data - später durch echte Datenbank ersetzen
+const getTestResults = (pid: string) => {
+  const testResults = {
+    "001": [
+      {
+        pid: "001",
+        name: "Schmidt",
+        vorname: "Maria",
+        geschlecht: "W",
+        barcode: "BC001234567",
+        test: "Vitamin D",
+        wert: "32.5",
+        einheit: "ng/ml",
+        zeit: "08.01.2025 14:30",
+        geraet: "COBAS E411",
+        flag: "Normal",
+        labnr: "L2025001",
+        barcodezusatz: "A1",
+        arztkuerzel: "Dr.M",
+        material: "Serum"
+      },
+      {
+        pid: "001",
+        name: "Schmidt",
+        vorname: "Maria",
+        geschlecht: "W",
+        barcode: "BC001234567",
+        test: "Cholesterin",
+        wert: "220",
+        einheit: "mg/dl",
+        zeit: "08.01.2025 14:30",
+        geraet: "COBAS C311",
+        flag: "Hoch",
+        labnr: "L2025002",
+        barcodezusatz: "A2",
+        arztkuerzel: "Dr.M",
+        material: "Serum"
+      },
+      {
+        pid: "001",
+        name: "Schmidt",
+        vorname: "Maria",
+        geschlecht: "W",
+        barcode: "BC001234567",
+        test: "HbA1c",
+        wert: "5.9",
+        einheit: "%",
+        zeit: "08.01.2025 14:30",
+        geraet: "DCA Vantage",
+        flag: "Normal",
+        labnr: "L2025003",
+        barcodezusatz: "A3",
+        arztkuerzel: "Dr.M",
+        material: "EDTA-Blut"
+      }
+    ],
+    "002": [
+      {
+        pid: "002",
+        name: "Weber",
+        vorname: "Thomas",
+        geschlecht: "M",
+        barcode: "BC001234568",
+        test: "TSH",
+        wert: "2.1",
+        einheit: "mU/l",
+        zeit: "08.01.2025 13:15",
+        geraet: "COBAS E411",
+        flag: "Normal",
+        labnr: "L2025004",
+        barcodezusatz: "B1",
+        arztkuerzel: "Dr.K",
+        material: "Serum"
+      },
+      {
+        pid: "002",
+        name: "Weber",
+        vorname: "Thomas",
+        geschlecht: "M",
+        barcode: "BC001234568",
+        test: "Ferritin",
+        wert: "45",
+        einheit: "ng/ml",
+        zeit: "08.01.2025 13:15",
+        geraet: "COBAS E411",
+        flag: "Niedrig",
+        labnr: "L2025005",
+        barcodezusatz: "B2",
+        arztkuerzel: "Dr.K",
+        material: "Serum"
+      }
+    ]
+  };
+  
+  return testResults[pid as keyof typeof testResults] || [];
+};
+
 const getPatientDetails = (pid: string) => {
   const patients = {
     "001": {
@@ -175,6 +271,66 @@ const PatientDetails = () => {
             </CardContent>
           </Card>
         </div>
+
+        {/* Test Results Table */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TestTube className="h-5 w-5 text-primary" />
+              Testergebnisse
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left p-2 text-muted-foreground font-medium">PID</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Name</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Vorname</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Geschlecht</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Barcode</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Test</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Wert</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Einheit</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Zeit</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Gerät</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Flag</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Labnr</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Barcodezusatz</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Arztkürzel</th>
+                    <th className="text-left p-2 text-muted-foreground font-medium">Material</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {getTestResults(patient.pid).map((test, index) => (
+                    <tr key={index} className="border-b hover:bg-muted/50">
+                      <td className="p-2">{test.pid}</td>
+                      <td className="p-2">{test.name}</td>
+                      <td className="p-2">{test.vorname}</td>
+                      <td className="p-2">{test.geschlecht}</td>
+                      <td className="p-2 font-mono text-xs">{test.barcode}</td>
+                      <td className="p-2">{test.test}</td>
+                      <td className="p-2 font-medium">{test.wert}</td>
+                      <td className="p-2 text-muted-foreground">{test.einheit}</td>
+                      <td className="p-2 text-xs">{test.zeit}</td>
+                      <td className="p-2">{test.geraet}</td>
+                      <td className="p-2">
+                        <Badge variant={test.flag === 'Normal' ? 'secondary' : test.flag === 'Hoch' ? 'destructive' : 'outline'}>
+                          {test.flag}
+                        </Badge>
+                      </td>
+                      <td className="p-2">{test.labnr}</td>
+                      <td className="p-2 font-mono text-xs">{test.barcodezusatz}</td>
+                      <td className="p-2">{test.arztkuerzel}</td>
+                      <td className="p-2">{test.material}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
