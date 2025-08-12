@@ -12,6 +12,7 @@ import Update from "./pages/Update";
 import Tests from "./pages/Tests";
 import Geraete from "./pages/Geraete";
 import Settings from "./pages/Settings";
+import CardDemo from "./pages/CardDemo";
  
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
           <Route path="/geraete" element={<Geraete />} />
           <Route path="/details/:pid" element={<PatientDetails />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/card-demo" element={<CardDemo />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
