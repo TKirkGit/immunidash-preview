@@ -110,8 +110,8 @@ const [timeTo, setTimeTo] = useState<string>("");
       <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
         <PageHeader title="Update" description="Suchen und markieren Sie Testergebnisse zur Aktualisierung." />
 
-<section className="grid grid-cols-1 md:grid-cols-12 gap-4">
-  <div className="space-y-2 md:col-span-3 lg:col-span-4">
+<section className="flex flex-wrap items-end gap-3 md:gap-4">
+  <div className="space-y-2 flex-1 min-w-[220px]">
     <Label htmlFor="update-search">Suche</Label>
     <div className="relative">
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -120,12 +120,12 @@ const [timeTo, setTimeTo] = useState<string>("");
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Test, Barcode oder PID suchen..."
-        className="pl-10"
+        className="pl-10 w-full"
         aria-label="Update suchen"
       />
     </div>
   </div>
-  <div className="space-y-2 md:col-span-2 lg:col-span-3">
+  <div className="space-y-2 basis-[180px] shrink-0">
     <Label>Zeitraum</Label>
     <Select value={timeframe} onValueChange={setTimeframe}>
       <SelectTrigger className="w-full">
@@ -139,7 +139,7 @@ const [timeTo, setTimeTo] = useState<string>("");
       </SelectContent>
     </Select>
   </div>
-  <div className="space-y-2 md:col-span-2">
+  <div className="space-y-2 basis-[140px] shrink-0">
     <Label htmlFor="update-time-from">Von</Label>
     <div className="relative">
       <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -148,12 +148,12 @@ const [timeTo, setTimeTo] = useState<string>("");
         type="time"
         value={timeFrom}
         onChange={(e) => setTimeFrom(e.target.value)}
-        className="pl-10"
+        className="pl-10 w-full"
         aria-label="Uhrzeit von"
       />
     </div>
   </div>
-  <div className="space-y-2 md:col-span-2">
+  <div className="space-y-2 basis-[140px] shrink-0">
     <Label htmlFor="update-time-to">Bis</Label>
     <div className="relative">
       <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -162,13 +162,13 @@ const [timeTo, setTimeTo] = useState<string>("");
         type="time"
         value={timeTo}
         onChange={(e) => setTimeTo(e.target.value)}
-        className="pl-10"
+        className="pl-10 w-full"
         aria-label="Uhrzeit bis"
       />
     </div>
   </div>
-  <div className="flex items-end md:col-span-3 lg:col-span-1 md:justify-end">
-    <Button onClick={handleSearch} className="w-full md:w-auto">Suchen</Button>
+  <div className="flex items-end basis-auto shrink-0">
+    <Button onClick={handleSearch} className="whitespace-nowrap">Suchen</Button>
   </div>
 </section>
 
