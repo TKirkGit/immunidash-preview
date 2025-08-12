@@ -25,11 +25,7 @@ const navItems = [
   { href: "/update", label: "Update", icon: TrendingUp },
   { href: "/tests", label: "Tests", icon: TestTubes },
   { href: "/geraete", label: "Geräte", icon: Cpu },
-  { href: "/results", label: "Ergebnisse", icon: FileText },
-  { href: "/appointments", label: "Termine", icon: Calendar },
-  { href: "/analytics", label: "Analytics", icon: TrendingUp },
-  { href: "/quality", label: "Qualität", icon: UserCheck },
-  { href: "/monitoring", label: "Monitoring", icon: Activity },
+
 ];
 
 interface SidebarProps {
