@@ -187,7 +187,7 @@ const Tests = () => {
         {/* Charts */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-2">
-            <CardHeader className="pb-2 flex items-center justify-between">
+            <CardHeader className="pb-2 flex flex-row items-center justify-between">
               <CardTitle>Messungen pro Tag</CardTitle>
               <ChartTableSwitch ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
             </CardHeader>
@@ -204,7 +204,7 @@ const Tests = () => {
           </Card>
 
           <Card>
-            <CardHeader className="pb-2 flex items-center justify-between">
+            <CardHeader className="pb-2 flex flex-row items-center justify-between">
               <CardTitle>Flag‑Verteilung</CardTitle>
               <ChartTableSwitch ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
             </CardHeader>
@@ -236,7 +236,7 @@ const Tests = () => {
         {/* Zusätzliche Diagramme */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
-            <CardHeader className="pb-2 flex items-center justify-between">
+            <CardHeader className="pb-2 flex flex-row items-center justify-between">
               <CardTitle>Gerätevergleich für Test</CardTitle>
               <ChartTableSwitch ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
             </CardHeader>
@@ -253,7 +253,7 @@ const Tests = () => {
           </Card>
 
           <Card>
-            <CardHeader className="pb-2 flex items-center justify-between">
+            <CardHeader className="pb-2 flex flex-row items-center justify-between">
               <CardTitle>Turnaround Zeit für Test</CardTitle>
               <ChartTableSwitch ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
             </CardHeader>
