@@ -159,7 +159,7 @@ const Search = () => {
   const onRowClick = (pid: string) => navigate(`/patients/${pid}`, { state: { from: 'search' } });
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex w-full overflow-x-hidden">
       <Sidebar />
       
       <main className="flex-1 p-6 space-y-6">
@@ -329,7 +329,7 @@ const Search = () => {
               </TabsList>
               
               <TabsContent value="kompakt">
-                <div className="overflow-auto max-w-full max-h-[70vh]">
+                <div className="overflow-x-auto overflow-y-auto w-full max-h-[70vh]">
                   <Table className="min-w-[1200px]">
                     <TableHeader>
                       <TableRow>
@@ -358,7 +358,7 @@ const Search = () => {
               </TabsContent>
               
               <TabsContent value="erweitert">
-                <div className="overflow-auto max-w-full max-h-[70vh]">
+                <div className="overflow-x-auto overflow-y-auto w-full max-h-[70vh]">
                   <Table className="min-w-[1200px]">
                     <TableHeader>
                       <TableRow>
