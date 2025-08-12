@@ -2,7 +2,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, User, TestTube, Calendar, Barcode, Download } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { ArrowLeft, User, TestTube, Calendar, Barcode, Download, ChevronDown } from "lucide-react";
 
 // Mock data - später durch echte Datenbank ersetzen
 const getTestResults = (pid: string) => {
@@ -101,8 +102,8 @@ const getTestResults = (pid: string) => {
   return testResults[pid as keyof typeof testResults] || [];
 };
 
-// Download function for test results
-const downloadTestResults = (pid: string) => {
+// Download functions for test results
+const downloadTestResultsCSV = (pid: string) => {
   const testData = getTestResults(pid);
   if (testData.length === 0) return;
 
@@ -126,6 +127,36 @@ const downloadTestResults = (pid: string) => {
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
+};
+
+const downloadTestResultsXLSX = (pid: string) => {
+  const testData = getTestResults(pid);
+  if (testData.length === 0) return;
+
+  // Import XLSX dynamically to avoid bundle size issues
+  import('xlsx').then((XLSX) => {
+    const worksheet = XLSX.utils.json_to_sheet(testData.map(test => ({
+      PID: test.pid,
+      Name: test.name,
+      Vorname: test.vorname,
+      Geschlecht: test.geschlecht,
+      Barcode: test.barcode,
+      Test: test.test,
+      Wert: test.wert,
+      Einheit: test.einheit,
+      Zeit: test.zeit,
+      Gerät: test.geraet,
+      Flag: test.flag,
+      Labnr: test.labnr,
+      Barcodezusatz: test.barcodezusatz,
+      Arztkürzel: test.arztkuerzel,
+      Material: test.material
+    })));
+    
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Testergebnisse');
+    XLSX.writeFile(workbook, `testergebnisse_patient_${pid}.xlsx`);
+  });
 };
 
 const getPatientDetails = (pid: string) => {
@@ -286,10 +317,23 @@ const PatientDetails = () => {
                 <TestTube className="h-5 w-5 text-primary" />
                 Testergebnisse
               </CardTitle>
-              <Button variant="outline" size="sm" onClick={() => downloadTestResults(patient.pid)}>
-                <Download className="h-4 w-4 mr-2" />
-                Download CSV
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
+                    <ChevronDown className="h-4 w-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-background border shadow-md z-50">
+                  <DropdownMenuItem onClick={() => downloadTestResultsCSV(patient.pid)}>
+                    .csv
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => downloadTestResultsXLSX(patient.pid)}>
+                    .xlsx
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </CardHeader>
           <CardContent>
