@@ -159,10 +159,10 @@ const Search = () => {
   const onRowClick = (pid: string) => navigate(`/patients/${pid}`, { state: { from: 'search' } });
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="min-h-screen bg-background flex overflow-x-hidden">
       <Sidebar />
       
-      <main className="flex-1 p-6 space-y-6">
+      <main className="flex-1 p-6 space-y-6 w-full overflow-x-hidden">
         <PageHeader title="Suche" description="Durchsuchen Sie Patientendaten und Testergebnisse." />
 
         {/* Search Forms */}
@@ -329,8 +329,8 @@ const Search = () => {
               </TabsList>
               
               <TabsContent value="kompakt">
-                <div className="overflow-auto max-w-full max-h-[70vh]">
-                  <Table className="min-w-[1200px]">
+                <div id="results-table-wrapper" className="w-full max-w-full overflow-x-auto overflow-y-auto max-h-[70vh] [-webkit-overflow-scrolling:touch]">
+                  <Table className="min-w-[1200px] break-words [overflow-wrap:anywhere]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>
@@ -358,8 +358,8 @@ const Search = () => {
               </TabsContent>
               
               <TabsContent value="erweitert">
-                <div className="overflow-auto max-w-full max-h-[70vh]">
-                  <Table className="min-w-[1200px]">
+                <div id="results-table-wrapper" className="w-full max-w-full overflow-x-auto overflow-y-auto max-h-[70vh] [-webkit-overflow-scrolling:touch]">
+                  <Table className="min-w-[1200px] break-words [overflow-wrap:anywhere]">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>
