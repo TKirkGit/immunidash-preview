@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Search as SearchIcon } from "lucide-react";
 
 const Update = () => {
@@ -75,7 +76,22 @@ const Update = () => {
     setTestResults(prev => 
       prev.map(result => 
         result.id === id 
-          ? { ...result, status: "Update" }
+          ? { ...result, status: result.status === "Update" ? "ausstehend" : "Update" }
+          : result
+      )
+    );
+  };
+
+  const selectedCount = testResults.filter(result => result.status === "Update").length;
+  const selectedTests = testResults.filter(result => result.status === "Update");
+
+  const handleUpdateConfirm = () => {
+    console.log("Tests aktualisiert:", selectedTests);
+    // Reset selected items back to "ausstehend"
+    setTestResults(prev => 
+      prev.map(result => 
+        result.status === "Update" 
+          ? { ...result, status: "ausstehend" }
           : result
       )
     );
@@ -171,7 +187,44 @@ const Update = () => {
         {/* Results Table */}
         <Card className="max-w-full">
           <CardHeader>
-            <CardTitle>Testergebnisse ({testResults.length})</CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle>Testergebnisse ({testResults.length})</CardTitle>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button 
+                    variant={selectedCount > 0 ? "default" : "secondary"}
+                    disabled={selectedCount === 0}
+                    className={selectedCount > 0 ? "bg-blue-600 hover:bg-blue-700" : ""}
+                  >
+                    UPDATE ({selectedCount})
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Tests aktualisieren?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Möchten Sie dieses Tests wirklich aktualisieren?
+                      <div className="mt-4">
+                        <strong>Ausgewählte Tests:</strong>
+                        <ul className="mt-2 space-y-1">
+                          {selectedTests.map((test) => (
+                            <li key={test.id} className="text-sm">
+                              • {test.test} ({test.barcode})
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Abbrechen</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleUpdateConfirm}>
+                      Aktualisieren
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
           </CardHeader>
           <CardContent className="max-w-full">
             <div className="overflow-x-auto">
@@ -202,7 +255,7 @@ const Update = () => {
                           variant="outline"
                           size="sm"
                           onClick={() => handleStatusUpdate(result.id)}
-                          disabled={result.status === "Update"}
+                          className={result.status === "Update" ? "bg-green-100 border-green-500 text-green-700 hover:bg-green-200" : ""}
                         >
                           {result.status === "Update" ? "✓" : "Ja"}
                         </Button>
