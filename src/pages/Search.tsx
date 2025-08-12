@@ -102,7 +102,7 @@ const Search = () => {
                   <CollapsibleContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                       <div className="space-y-2">
-                        <Label htmlFor="datumVon">Datum Von</Label>
+                        <Label htmlFor="datumVon">DATUM VON</Label>
                         <Input
                           id="datumVon"
                           type="date"
@@ -111,7 +111,7 @@ const Search = () => {
                       </div>
                       
                       <div className="space-y-2">
-                        <Label htmlFor="datumBis">Datum Bis</Label>
+                        <Label htmlFor="datumBis">DATUM BIS</Label>
                         <Input
                           id="datumBis"
                           type="date"
@@ -119,64 +119,56 @@ const Search = () => {
                         />
                       </div>
                       
-                      <div className="space-y-2">
-                        <Label htmlFor="vorname">Vorname</Label>
+                      <div>
                         <Input
                           id="vorname"
                           placeholder="Vorname"
                         />
                       </div>
                       
-                      <div className="space-y-2">
-                        <Label htmlFor="nachname">Nachname</Label>
+                      <div>
                         <Input
                           id="nachname"
                           placeholder="Nachname"
                         />
                       </div>
                       
-                      <div className="space-y-2">
-                        <Label htmlFor="pid">PID</Label>
+                      <div>
                         <Input
                           id="pid"
                           placeholder="Patienten-ID"
                         />
                       </div>
                       
-                      <div className="space-y-2">
-                        <Label htmlFor="testKuerzel">Test-Kürzel</Label>
+                      <div>
                         <Input
                           id="testKuerzel"
                           placeholder="Test-Kürzel"
                         />
                       </div>
                       
-                      <div className="space-y-2">
-                        <Label htmlFor="geraeteId">Geräte-ID</Label>
+                      <div>
                         <Input
                           id="geraeteId"
                           placeholder="Geräte-ID"
                         />
                       </div>
                       
-                      <div className="space-y-2">
-                        <Label htmlFor="flag">FLAG</Label>
+                      <div>
                         <Input
                           id="flag"
                           placeholder="FLAG"
                         />
                       </div>
                       
-                      <div className="space-y-2">
-                        <Label htmlFor="arztKuerzel">Arztkürzel</Label>
+                      <div>
                         <Input
                           id="arztKuerzel"
                           placeholder="Arztkürzel"
                         />
                       </div>
                       
-                      <div className="space-y-2">
-                        <Label htmlFor="material">Material</Label>
+                      <div>
                         <Input
                           id="material"
                           placeholder="Material"
