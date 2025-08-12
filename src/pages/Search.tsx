@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Search as SearchIcon, ChevronDown, ChevronUp } from "lucide-react";
 
 const Search = () => {
@@ -16,10 +17,18 @@ const Search = () => {
       pid: "P001234",
       vorname: "Max",
       nachname: "Mustermann",
-      datum: "2024-01-15",
-      testKuerzel: "BLU",
+      name: "Max Mustermann",
+      barcode: "BC001234",
+      geschlecht: "M",
+      anzahlTests: 5,
+      zeit: "2024-01-15 14:30",
+      test: "Blutbild",
+      wert: "12.5",
+      einheit: "g/dl",
       geraeteId: "GER001",
       flag: "Normal",
+      labnr: "L001",
+      barcodezusatz: "A1",
       arztKuerzel: "Dr.M",
       material: "Blut"
     },
@@ -27,10 +36,18 @@ const Search = () => {
       pid: "P001235",
       vorname: "Anna",
       nachname: "Schmidt",
-      datum: "2024-01-14",
-      testKuerzel: "URI",
+      name: "Anna Schmidt",
+      barcode: "BC001235",
+      geschlecht: "W",
+      anzahlTests: 3,
+      zeit: "2024-01-14 10:15",
+      test: "Urinanalyse",
+      wert: "1.2",
+      einheit: "mg/ml",
       geraeteId: "GER002",
       flag: "Auffällig",
+      labnr: "L002",
+      barcodezusatz: "B2",
       arztKuerzel: "Dr.K",
       material: "Urin"
     },
@@ -38,10 +55,18 @@ const Search = () => {
       pid: "P001236",
       vorname: "Peter",
       nachname: "Weber",
-      datum: "2024-01-13",
-      testKuerzel: "STU",
+      name: "Peter Weber",
+      barcode: "BC001236",
+      geschlecht: "M",
+      anzahlTests: 2,
+      zeit: "2024-01-13 16:45",
+      test: "Stuhlanalyse",
+      wert: "Negativ",
+      einheit: "-",
       geraeteId: "GER001",
       flag: "Normal",
+      labnr: "L003",
+      barcodezusatz: "C3",
       arztKuerzel: "Dr.M",
       material: "Stuhl"
     }
@@ -198,40 +223,88 @@ const Search = () => {
             <CardTitle>Suchergebnisse</CardTitle>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>PID</TableHead>
-                  <TableHead>Vorname</TableHead>
-                  <TableHead>Nachname</TableHead>
-                  <TableHead>Datum</TableHead>
-                  <TableHead>Test-Kürzel</TableHead>
-                  <TableHead>Geräte-ID</TableHead>
-                  <TableHead>FLAG</TableHead>
-                  <TableHead>Arztkürzel</TableHead>
-                  <TableHead>Material</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {searchResults.map((result, index) => (
-                  <TableRow key={index}>
-                    <TableCell className="font-medium">{result.pid}</TableCell>
-                    <TableCell>{result.vorname}</TableCell>
-                    <TableCell>{result.nachname}</TableCell>
-                    <TableCell>{result.datum}</TableCell>
-                    <TableCell>{result.testKuerzel}</TableCell>
-                    <TableCell>{result.geraeteId}</TableCell>
-                    <TableCell>
-                      <Badge variant={result.flag === "Normal" ? "secondary" : "destructive"}>
-                        {result.flag}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{result.arztKuerzel}</TableCell>
-                    <TableCell>{result.material}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <Tabs defaultValue="kompakt" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="kompakt">Kompakt</TabsTrigger>
+                <TabsTrigger value="erweitert">Erweitert</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="kompakt">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>PID</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Barcode</TableHead>
+                      <TableHead>Geschlecht</TableHead>
+                      <TableHead>Anzahl Tests</TableHead>
+                      <TableHead>Zeit</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {searchResults.map((result, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="font-medium">{result.pid}</TableCell>
+                        <TableCell>{result.name}</TableCell>
+                        <TableCell>{result.barcode}</TableCell>
+                        <TableCell>{result.geschlecht}</TableCell>
+                        <TableCell>{result.anzahlTests}</TableCell>
+                        <TableCell>{result.zeit}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TabsContent>
+              
+              <TabsContent value="erweitert">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>PID</TableHead>
+                      <TableHead>Barcode</TableHead>
+                      <TableHead>Test</TableHead>
+                      <TableHead>Wert</TableHead>
+                      <TableHead>Einheit</TableHead>
+                      <TableHead>Zeit</TableHead>
+                      <TableHead>Gerät</TableHead>
+                      <TableHead>Flag</TableHead>
+                      <TableHead>Labnr</TableHead>
+                      <TableHead>Barcodezusatz</TableHead>
+                      <TableHead>Arzt</TableHead>
+                      <TableHead>Material</TableHead>
+                      <TableHead>Nachname</TableHead>
+                      <TableHead>Vorname</TableHead>
+                      <TableHead>Geschlecht</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {searchResults.map((result, index) => (
+                      <TableRow key={index}>
+                        <TableCell className="font-medium">{result.pid}</TableCell>
+                        <TableCell>{result.barcode}</TableCell>
+                        <TableCell>{result.test}</TableCell>
+                        <TableCell>{result.wert}</TableCell>
+                        <TableCell>{result.einheit}</TableCell>
+                        <TableCell>{result.zeit}</TableCell>
+                        <TableCell>{result.geraeteId}</TableCell>
+                        <TableCell>
+                          <Badge variant={result.flag === "Normal" ? "secondary" : "destructive"}>
+                            {result.flag}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{result.labnr}</TableCell>
+                        <TableCell>{result.barcodezusatz}</TableCell>
+                        <TableCell>{result.arztKuerzel}</TableCell>
+                        <TableCell>{result.material}</TableCell>
+                        <TableCell>{result.nachname}</TableCell>
+                        <TableCell>{result.vorname}</TableCell>
+                        <TableCell>{result.geschlecht}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
       </main>
