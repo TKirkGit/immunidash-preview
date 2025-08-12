@@ -65,7 +65,7 @@ export function TestResultsChart() {
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="overflow-x-auto max-w-full">
+          <div className="h-80 overflow-x-auto overflow-y-auto max-w-full">
             <Table aria-label="Wöchentliche Teststatistiken Tabelle">
               <TableHeader>
                 <TableRow>
