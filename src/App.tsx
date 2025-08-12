@@ -11,7 +11,8 @@ import Search from "./pages/Search";
 import Update from "./pages/Update";
 import Tests from "./pages/Tests";
 import Geraete from "./pages/Geraete";
-
+import Settings from "./pages/Settings";
+ 
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/tests" element={<Tests />} />
           <Route path="/geraete" element={<Geraete />} />
           <Route path="/details/:pid" element={<PatientDetails />} />
+          <Route path="/settings" element={<Settings />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

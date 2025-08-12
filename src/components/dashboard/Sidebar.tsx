@@ -105,15 +105,15 @@ export function Sidebar({ className }: SidebarProps) {
       </nav>
 
       <div className="absolute bottom-4 left-4 right-4">
-        <div className={cn(
-          "flex items-center gap-3 p-3 rounded-lg bg-accent",
+        <Link to="/settings" className={cn(
+          "flex items-center gap-3 p-3 rounded-lg bg-accent hover:bg-accent/90 transition-colors",
           collapsed && "justify-center"
         )}>
           <Settings className="h-5 w-5 text-accent-foreground" />
           {!collapsed && (
             <span className="text-sm font-medium text-accent-foreground">Einstellungen</span>
           )}
-        </div>
+        </Link>
       </div>
     </div>
   );
