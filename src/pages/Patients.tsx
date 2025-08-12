@@ -5,23 +5,29 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PageHeader from "@/components/layout/PageHeader";
 import { useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 const Patients = () => {
   const { pid } = useParams<{ pid: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
+  const fromSearch = ((location.state as { from?: string } | undefined)?.from === 'search');
   const [selectedPatient, setSelectedPatient] = useState<string | null>(pid || null);
 
   // Handle patient selection from table
   const handlePatientSelect = (patientId: string) => {
     setSelectedPatient(patientId);
-    navigate(`/patients/${patientId}`, { replace: true });
+    navigate(`/patients/${patientId}`, { replace: true, state: { from: 'patients' } });
   };
 
   // Handle back to patient list
   const handleBackToList = () => {
     setSelectedPatient(null);
-    navigate('/patients', { replace: true });
+    if (fromSearch) {
+      navigate('/search', { replace: true });
+    } else {
+      navigate('/patients', { replace: true });
+    }
   };
 
   return (
@@ -38,7 +44,7 @@ const Patients = () => {
               className="mb-6"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Zurück zur Patientenliste
+              {fromSearch ? 'Zurück zur Suche' : 'Zurück zur Patientenliste'}
             </Button>
             <PatientDetails patientId={selectedPatient} />
           </div>

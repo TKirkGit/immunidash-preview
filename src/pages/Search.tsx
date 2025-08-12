@@ -156,7 +156,7 @@ const Search = () => {
   });
 
   const navigate = useNavigate();
-  const onRowClick = (pid: string) => navigate(`/patients/${pid}`);
+  const onRowClick = (pid: string) => navigate(`/patients/${pid}`, { state: { from: 'search' } });
 
   return (
     <div className="min-h-screen bg-background flex">
