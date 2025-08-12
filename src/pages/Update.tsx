@@ -7,12 +7,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Search as SearchIcon } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 
 const Update = () => {
-  const { toast } = useToast();
   const [searchParams, setSearchParams] = useState({
     vonDatum: "",
     bisDatum: "",
@@ -20,7 +17,6 @@ const Update = () => {
     vonUhrzeit: "",
     bisUhrzeit: ""
   });
-  const [isUpdateDialogOpen, setIsUpdateDialogOpen] = useState(false);
 
   // Mock data for the table
   const [testResults, setTestResults] = useState([
@@ -79,28 +75,8 @@ const Update = () => {
     setTestResults(prev => 
       prev.map(result => 
         result.id === id 
-          ? { ...result, status: result.status === "Update" ? "ausstehend" : "Update" }
+          ? { ...result, status: "Update" }
           : result
-      )
-    );
-  };
-
-  const getSelectedTests = () => {
-    return testResults.filter(result => result.status === "Update");
-  };
-
-  const handleBulkUpdate = () => {
-    const selectedTests = getSelectedTests();
-    toast({
-      title: "Tests aktualisiert",
-      description: `${selectedTests.length} Test(s) wurden erfolgreich aktualisiert.`,
-    });
-    setIsUpdateDialogOpen(false);
-    
-    // Reset selected tests back to "ausstehend"
-    setTestResults(prev =>
-      prev.map(result =>
-        result.status === "Update" ? { ...result, status: "ausstehend" } : result
       )
     );
   };
@@ -192,52 +168,6 @@ const Update = () => {
           </CardContent>
         </Card>
 
-        {/* Update Button */}
-        {getSelectedTests().length > 0 && (
-          <div className="flex justify-center">
-            <Dialog open={isUpdateDialogOpen} onOpenChange={setIsUpdateDialogOpen}>
-              <DialogTrigger asChild>
-                <Button variant="destructive" size="lg">
-                  Update ({getSelectedTests().length})
-                </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Tests aktualisieren?</DialogTitle>
-                  <DialogDescription>
-                    Möchten Sie dieses Tests wirklich aktualisieren?
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="py-4">
-                  <h4 className="font-medium mb-3">Ausgewählte Tests:</h4>
-                  <div className="space-y-2 max-h-40 overflow-y-auto">
-                    {getSelectedTests().map((test) => (
-                      <div key={test.id} className="flex justify-between items-center text-sm">
-                        <span>{test.test}</span>
-                        <span className="text-muted-foreground">({test.barcode})</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <DialogFooter>
-                  <Button
-                    variant="outline"
-                    onClick={() => setIsUpdateDialogOpen(false)}
-                  >
-                    Abbrechen
-                  </Button>
-                  <Button
-                    variant="destructive"
-                    onClick={handleBulkUpdate}
-                  >
-                    Aktualisieren
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
-          </div>
-        )}
-
         {/* Results Table */}
         <Card className="max-w-full">
           <CardHeader>
@@ -272,6 +202,7 @@ const Update = () => {
                           variant="outline"
                           size="sm"
                           onClick={() => handleStatusUpdate(result.id)}
+                          disabled={result.status === "Update"}
                         >
                           {result.status === "Update" ? "✓" : "Ja"}
                         </Button>
