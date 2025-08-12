@@ -9,12 +9,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import PageHeader from "@/components/layout/PageHeader";
-import { Search, Calendar } from "lucide-react";
+import { Search, Calendar, Clock } from "lucide-react";
 
 const Update = () => {
 const [query, setQuery] = useState("");
 const [timeframe, setTimeframe] = useState<string>("7");
-
+const [time, setTime] = useState<string>("");
   // Mock data for the table
   const [testResults, setTestResults] = useState([
     {
@@ -65,7 +65,7 @@ const [timeframe, setTimeframe] = useState<string>("7");
   ]);
 
   const handleSearch = () => {
-    console.log("Suche ausgeführt mit:", { query, timeframe });
+    console.log("Suche ausgeführt mit:", { query, timeframe, time });
   };
 
   const handleStatusUpdate = (id: number) => {
@@ -109,7 +109,7 @@ const [timeframe, setTimeframe] = useState<string>("7");
       <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
         <PageHeader title="Update" description="Suchen und markieren Sie Testergebnisse zur Aktualisierung." />
 
-<section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+<section className="grid grid-cols-1 md:grid-cols-4 gap-4">
   <div className="space-y-2">
     <Label htmlFor="update-search">Suche</Label>
     <div className="relative">
@@ -137,6 +137,20 @@ const [timeframe, setTimeframe] = useState<string>("7");
         <SelectItem value="90">Letzte 90 Tage</SelectItem>
       </SelectContent>
     </Select>
+  </div>
+  <div className="space-y-2">
+    <Label htmlFor="update-time">Uhrzeit</Label>
+    <div className="relative">
+      <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <Input
+        id="update-time"
+        type="time"
+        value={time}
+        onChange={(e) => setTime(e.target.value)}
+        className="pl-10"
+        aria-label="Uhrzeit auswählen"
+      />
+    </div>
   </div>
   <div className="flex items-end">
     <Button onClick={handleSearch} className="w-full md:w-auto">Suchen</Button>
