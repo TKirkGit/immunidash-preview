@@ -119,22 +119,34 @@ export function PatientTable({ onPatientSelect }: PatientTableProps) {
                         <Clock className="h-4 w-4" />
                         {patient.timestamp}
                       </span>
+                      <Badge
+                        variant={patient.status === 'urgent' ? 'destructive' : patient.status === 'pending' ? 'secondary' : 'default'}
+                        className="uppercase tracking-wide"
+                      >
+                        {patient.status}
+                      </Badge>
                     </div>
                   </div>
 
-                  <div className="hidden sm:flex items-center gap-4 shrink-0">
-                    <div className="flex flex-col items-end text-sm text-muted-foreground">
-                      <span className="inline-flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        {patient.timestamp}
-                      </span>
-                      <span className="inline-flex items-center gap-2 rounded-md bg-muted px-2 py-1 font-mono text-base text-foreground border border-border">
-                        <Barcode className="h-4 w-4 text-muted-foreground" />
-                        {patient.barcode}
-                      </span>
+                    <div className="hidden sm:flex items-start justify-end gap-6 shrink-0 min-w-[360px]">
+                      <div className="flex flex-col items-end gap-2 text-sm text-muted-foreground">
+                        <Badge
+                          variant={patient.status === 'urgent' ? 'destructive' : patient.status === 'pending' ? 'secondary' : 'default'}
+                          className="uppercase tracking-wide"
+                        >
+                          {patient.status}
+                        </Badge>
+                        <span className="inline-flex items-center gap-1">
+                          <Clock className="h-4 w-4" />
+                          {patient.timestamp}
+                        </span>
+                        <span className="inline-flex items-center gap-2 rounded-md bg-muted px-3 py-1.5 font-mono text-lg text-foreground border border-border">
+                          <Barcode className="h-4 w-4 text-muted-foreground" />
+                          {patient.barcode}
+                        </span>
+                      </div>
+                      <ChevronRight className="h-5 w-5 text-muted-foreground/70" />
                     </div>
-                    <ChevronRight className="h-5 w-5 text-muted-foreground/70" />
-                  </div>
                 </div>
               </div>
             ))}
