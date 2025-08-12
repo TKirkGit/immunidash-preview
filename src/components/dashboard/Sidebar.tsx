@@ -43,10 +43,12 @@ export function Sidebar({
     }
   });
   const location = useLocation();
-  return <div className={cn("bg-card border-r transition-all duration-300 relative", collapsed ? "w-16" : "w-64", className)}>
+  return <div className={cn("bg-card border-r transition-all duration-300 relative", collapsed ? "w-18" : "w-64", className)}>
       <div className="p-6 border-b">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-primary-foreground font-bold">H</div>
+          <div className="w-8 h-8 bg-[#0053a1] rounded-lg flex items-center justify-center text-white font-bold leading-none">
+  <span className="text-[1.15rem] tracking-[0.01em]">H</span>
+</div>
           {!collapsed && <div>
               <h2 className="font-bold text-lg text-foreground">HL7Viewer</h2>
               <p className="text-xs text-muted-foreground">Dashboard</p>
@@ -68,7 +70,7 @@ export function Sidebar({
         const Icon = item.icon;
         const isActive = location.pathname === item.href;
         return <Link key={item.href} to={item.href} className={cn("flex items-center gap-3 px-3 py-2 rounded-lg transition-colors", "hover:bg-accent hover:text-accent-foreground", isActive && "bg-primary text-primary-foreground", collapsed && "justify-center")}>
-              <Icon className="h-5 w-5 flex-shrink-0" />
+              <Icon className="h-6 w-6 flex-shrink-0" />
               {!collapsed && <span className="text-sm font-medium">{item.label}</span>}
             </Link>;
       })}
