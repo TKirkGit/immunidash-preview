@@ -8,7 +8,66 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search as SearchIcon, ChevronDown, ChevronUp } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { Search as SearchIcon, ChevronDown, ChevronUp, Download } from "lucide-react";
+
+// Download functions for search results
+const downloadSearchResultsCSV = (results: any[]) => {
+  if (results.length === 0) return;
+
+  const csvHeaders = ['PID', 'Name', 'Barcode', 'Geschlecht', 'Anzahl Tests', 'Zeit', 'Test', 'Wert', 'Einheit', 'Gerät', 'Flag', 'Labnr', 'Barcodezusatz', 'Arztkürzel', 'Material', 'Nachname', 'Vorname'];
+  const csvData = results.map(result => [
+    result.pid, result.name, result.barcode, result.geschlecht, result.anzahlTests,
+    result.zeit, result.test, result.wert, result.einheit, result.geraeteId,
+    result.flag, result.labnr, result.barcodezusatz, result.arztKuerzel, result.material,
+    result.nachname, result.vorname
+  ]);
+
+  const csvContent = [csvHeaders, ...csvData]
+    .map(row => row.map(field => `"${field}"`).join(','))
+    .join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  link.setAttribute('href', url);
+  link.setAttribute('download', `suchergebnisse.csv`);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+
+const downloadSearchResultsXLSX = (results: any[]) => {
+  if (results.length === 0) return;
+
+  // Import XLSX dynamically to avoid bundle size issues
+  import('xlsx').then((XLSX) => {
+    const worksheet = XLSX.utils.json_to_sheet(results.map(result => ({
+      PID: result.pid,
+      Name: result.name,
+      Barcode: result.barcode,
+      Geschlecht: result.geschlecht,
+      'Anzahl Tests': result.anzahlTests,
+      Zeit: result.zeit,
+      Test: result.test,
+      Wert: result.wert,
+      Einheit: result.einheit,
+      Gerät: result.geraeteId,
+      Flag: result.flag,
+      Labnr: result.labnr,
+      Barcodezusatz: result.barcodezusatz,
+      Arztkürzel: result.arztKuerzel,
+      Material: result.material,
+      Nachname: result.nachname,
+      Vorname: result.vorname
+    })));
+    
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Suchergebnisse');
+    XLSX.writeFile(workbook, `suchergebnisse.xlsx`);
+  });
+};
 
 const Search = () => {
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
@@ -220,7 +279,26 @@ const Search = () => {
         {/* Results Table */}
         <Card className="max-w-full">
           <CardHeader>
-            <CardTitle>Suchergebnisse</CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle>Suchergebnisse</CardTitle>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
+                    <ChevronDown className="h-4 w-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="bg-background border shadow-md z-50">
+                  <DropdownMenuItem onClick={() => downloadSearchResultsCSV(searchResults)}>
+                    .csv
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => downloadSearchResultsXLSX(searchResults)}>
+                    .xlsx
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </CardHeader>
           <CardContent className="max-w-full">
             <Tabs defaultValue="kompakt" className="w-full">
