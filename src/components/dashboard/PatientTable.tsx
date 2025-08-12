@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Users, Barcode, Clock, FlaskConical } from "lucide-react";
+import { Users, Barcode, Clock, FlaskConical, ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 interface Patient {
   pid: string;
@@ -86,7 +86,7 @@ export function PatientTable({ onPatientSelect }: PatientTableProps) {
               <div
                 key={patient.pid}
                 onClick={() => handlePatientClick(patient.pid)}
-                className="flex items-start p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors cursor-pointer"
+                className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors cursor-pointer"
               >
                 <div className="flex items-start gap-4 w-full">
                   <Avatar className="h-12 w-12">
@@ -110,7 +110,7 @@ export function PatientTable({ onPatientSelect }: PatientTableProps) {
                       </Badge>
                     </div>
 
-                    <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+                    <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground sm:hidden">
                       <span className="inline-flex items-center gap-1">
                         <Barcode className="h-4 w-4" />
                         {patient.barcode}
@@ -120,6 +120,20 @@ export function PatientTable({ onPatientSelect }: PatientTableProps) {
                         {patient.timestamp}
                       </span>
                     </div>
+                  </div>
+
+                  <div className="hidden sm:flex items-center gap-4 shrink-0">
+                    <div className="flex flex-col items-end text-sm text-muted-foreground">
+                      <span className="inline-flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        {patient.timestamp}
+                      </span>
+                      <span className="inline-flex items-center gap-1 font-mono">
+                        <Barcode className="h-4 w-4" />
+                        {patient.barcode}
+                      </span>
+                    </div>
+                    <ChevronRight className="h-5 w-5 text-muted-foreground/70" />
                   </div>
                 </div>
               </div>
