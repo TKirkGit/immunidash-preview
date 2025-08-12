@@ -35,6 +35,7 @@ import {
   Line,
 } from "recharts";
 import PageHeader from "@/components/layout/PageHeader";
+import ChartTableSwitch from "@/components/common/ChartTableSwitch";
 
 // Mock: Grunddaten für Messungen und Flags
 const buildMockDailyData = (days: number) => {
@@ -186,10 +187,11 @@ const Tests = () => {
         {/* Charts */}
         <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <Card className="lg:col-span-2">
-            <CardHeader className="pb-2">
+            <CardHeader className="pb-2 flex items-center justify-between">
               <CardTitle>Messungen pro Tag</CardTitle>
+              <ChartTableSwitch ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
             </CardHeader>
-            <CardContent className="pl-2">
+            <CardContent className="pl-2 graph-big">
               <ResponsiveContainer width="100%" height={320}>
                 <BarChart data={dailyData}>
                   <XAxis dataKey="day" />
@@ -202,10 +204,11 @@ const Tests = () => {
           </Card>
 
           <Card>
-            <CardHeader className="pb-2">
+            <CardHeader className="pb-2 flex items-center justify-between">
               <CardTitle>Flag‑Verteilung</CardTitle>
+              <ChartTableSwitch ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
             </CardHeader>
-            <CardContent>
+            <CardContent className="graph-small">
               <ResponsiveContainer width="100%" height={320}>
                 <PieChart>
                   <Pie
@@ -233,10 +236,11 @@ const Tests = () => {
         {/* Zusätzliche Diagramme */}
         <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
-            <CardHeader className="pb-2">
+            <CardHeader className="pb-2 flex items-center justify-between">
               <CardTitle>Gerätevergleich für Test</CardTitle>
+              <ChartTableSwitch ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
             </CardHeader>
-            <CardContent className="pl-2">
+            <CardContent className="pl-2 graph-small">
               <ResponsiveContainer width="100%" height={320}>
                 <BarChart data={DEVICE_COMPARISON}>
                   <XAxis dataKey="device" />
@@ -249,10 +253,11 @@ const Tests = () => {
           </Card>
 
           <Card>
-            <CardHeader className="pb-2">
+            <CardHeader className="pb-2 flex items-center justify-between">
               <CardTitle>Turnaround Zeit für Test</CardTitle>
+              <ChartTableSwitch ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
             </CardHeader>
-            <CardContent className="pl-2">
+            <CardContent className="pl-2 graph-small">
               <ResponsiveContainer width="100%" height={320}>
                 <LineChart data={tatData}>
                   <XAxis dataKey="day" />

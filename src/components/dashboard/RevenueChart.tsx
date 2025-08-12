@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { Euro } from "lucide-react";
+import ChartTableSwitch from "@/components/common/ChartTableSwitch";
 
 const data = [
   { month: "Jan", revenue: 45000, costs: 32000 },
@@ -18,6 +20,8 @@ const data = [
 ];
 
 export function RevenueChart() {
+  const [mode, setMode] = useState<"chart" | "table">("chart");
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -25,8 +29,9 @@ export function RevenueChart() {
           <Euro className="h-5 w-5 text-primary" />
           Geräte Auslastung
         </CardTitle>
+        <ChartTableSwitch mode={mode} onChange={setMode} ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
       </CardHeader>
-      <CardContent className="pl-2">
+      <CardContent className="pl-2 graph-small">
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={data}>
             <XAxis dataKey="month" />

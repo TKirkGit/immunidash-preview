@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, Tooltip } from "recharts";
 import { TrendingUp } from "lucide-react";
+import ChartTableSwitch from "@/components/common/ChartTableSwitch";
 
 const data = [
   { name: "Mo", tests: 45, completed: 42 },
@@ -13,15 +15,18 @@ const data = [
 ];
 
 export function TestResultsChart() {
+  const [mode, setMode] = useState<"chart" | "table">("chart");
+
   return (
     <Card className="col-span-2">
-      <CardHeader>
+      <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle className="flex items-center gap-2">
           <TrendingUp className="h-5 w-5 text-primary" />
           Wöchentliche Teststatistiken
         </CardTitle>
+        <ChartTableSwitch mode={mode} onChange={setMode} ariaLabel="Ansicht umschalten: Diagramm oder Tabelle" />
       </CardHeader>
-      <CardContent>
+      <CardContent className="graph-big">
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={data}>

@@ -119,3 +119,13 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  /* Unified graph container utilities */
+  .graph-big {
+    @apply relative w-full; /* container for large graphs */
+  }
+  .graph-small {
+    @apply relative w-full; /* container for small graphs */
+  }
+}
