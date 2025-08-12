@@ -111,7 +111,7 @@ const [timeTo, setTimeTo] = useState<string>("");
         <PageHeader title="Update" description="Suchen und markieren Sie Testergebnisse zur Aktualisierung." />
 
 <section className="flex flex-wrap items-end gap-3 md:gap-4">
-  <div className="space-y-2 flex-1 min-w-[220px]">
+  <div className="space-y-2 basis-[260px] lg:basis-[320px] grow-0 shrink">
     <Label htmlFor="update-search">Suche</Label>
     <div className="relative">
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -125,7 +125,7 @@ const [timeTo, setTimeTo] = useState<string>("");
       />
     </div>
   </div>
-  <div className="space-y-2 basis-[180px] shrink-0">
+  <div className="space-y-2 basis-[160px] shrink-0">
     <Label>Zeitraum</Label>
     <Select value={timeframe} onValueChange={setTimeframe}>
       <SelectTrigger className="w-full">
@@ -139,7 +139,7 @@ const [timeTo, setTimeTo] = useState<string>("");
       </SelectContent>
     </Select>
   </div>
-  <div className="space-y-2 basis-[140px] shrink-0">
+  <div className="space-y-2 basis-[120px] shrink-0">
     <Label htmlFor="update-time-from">Von</Label>
     <div className="relative">
       <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -153,7 +153,7 @@ const [timeTo, setTimeTo] = useState<string>("");
       />
     </div>
   </div>
-  <div className="space-y-2 basis-[140px] shrink-0">
+  <div className="space-y-2 basis-[120px] shrink-0">
     <Label htmlFor="update-time-to">Bis</Label>
     <div className="relative">
       <Clock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
