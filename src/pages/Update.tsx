@@ -1,26 +1,19 @@
 import { useState } from "react";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import PageHeader from "@/components/layout/PageHeader";
-import SearchFilters, { PresetValue, type DeviceOption } from "@/components/search/SearchFilters";
-import FilterChips from "@/components/search/FilterChips";
+import { Search, Calendar } from "lucide-react";
 
 const Update = () => {
 const [query, setQuery] = useState("");
-const [device, setDevice] = useState("");
-const [preset, setPreset] = useState<PresetValue>("24h");
-const [from, setFrom] = useState("");
-const [to, setTo] = useState("");
-const deviceOptions: DeviceOption[] = [
-  { value: "sysmex-xn-1000", label: "Sysmex XN-1000" },
-  { value: "cobas-8000", label: "Cobas 8000" },
-  { value: "architect-i2000sr", label: "Architect i2000SR" },
-  { value: "vitros-5600", label: "Vitros 5600" },
-];
+const [timeframe, setTimeframe] = useState<string>("7");
 
   // Mock data for the table
   const [testResults, setTestResults] = useState([
@@ -71,9 +64,9 @@ const deviceOptions: DeviceOption[] = [
     }
   ]);
 
-const handleSearch = () => {
-  console.log("Suche ausgeführt mit:", { query, device, preset, from, to });
-};
+  const handleSearch = () => {
+    console.log("Suche ausgeführt mit:", { query, timeframe });
+  };
 
   const handleStatusUpdate = (id: number) => {
     setTestResults(prev => 
@@ -109,22 +102,6 @@ const handleSearch = () => {
     return <Badge variant="default">{status}</Badge>;
   };
 
-  // Active filter chips
-  const chips: { key: string; label: string; onRemove: () => void }[] = [];
-  if (query) {
-    chips.push({ key: "query", label: `Suche: ${query}`, onRemove: () => setQuery("") });
-  }
-  if (device) {
-    const label = deviceOptions.find((d) => d.value === device)?.label ?? device;
-    chips.push({ key: "device", label: `Gerät: ${label}`, onRemove: () => setDevice("") });
-  }
-  if (preset !== "custom") {
-    const presetLabel = preset === "24h" ? "24h" : preset === "7d" ? "7 Tage" : "30 Tage";
-    chips.push({ key: "preset", label: `Zeitraum: ${presetLabel}`, onRemove: () => setPreset("24h") });
-  } else if (from || to) {
-    const range = `${from || "?"} – ${to || "?"}`;
-    chips.push({ key: "range", label: `Zeitraum: ${range}`, onRemove: () => { setFrom(""); setTo(""); setPreset("24h"); } });
-  }
 
   return (
     <div className="flex min-h-screen w-full overflow-x-hidden">
@@ -132,32 +109,39 @@ const handleSearch = () => {
       <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
         <PageHeader title="Update" description="Suchen und markieren Sie Testergebnisse zur Aktualisierung." />
 
-<SearchFilters
-  title="Suche"
-  showQuery
-  query={query}
-  onQueryChange={setQuery}
-  showDevice
-  device={device}
-  onDeviceChange={setDevice}
-  preset={preset}
-  onPresetChange={setPreset}
-  from={from}
-  to={to}
-  onFromChange={setFrom}
-  onToChange={setTo}
-  onSubmit={handleSearch}
-  onReset={() => {
-    setQuery("");
-    setDevice("");
-    setPreset("24h");
-    setFrom("");
-    setTo("");
-  }}
-/>
-<div>
-  <FilterChips chips={chips} />
-</div>
+<section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div className="space-y-2">
+    <Label htmlFor="update-search">Suche</Label>
+    <div className="relative">
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+      <Input
+        id="update-search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Test, Barcode oder PID suchen..."
+        className="pl-10"
+        aria-label="Update suchen"
+      />
+    </div>
+  </div>
+  <div className="space-y-2">
+    <Label>Zeitraum</Label>
+    <Select value={timeframe} onValueChange={setTimeframe}>
+      <SelectTrigger className="w-full">
+        <Calendar className="mr-2 h-4 w-4" />
+        <SelectValue placeholder="Zeitraum" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="7">Letzte 7 Tage</SelectItem>
+        <SelectItem value="30">Letzte 30 Tage</SelectItem>
+        <SelectItem value="90">Letzte 90 Tage</SelectItem>
+      </SelectContent>
+    </Select>
+  </div>
+  <div className="flex items-end">
+    <Button onClick={handleSearch} className="w-full md:w-auto">Suchen</Button>
+  </div>
+</section>
 
         {/* Results Table */}
         <Card className="max-w-full">
@@ -209,7 +193,6 @@ const handleSearch = () => {
                     <TableHead>Test</TableHead>
                     <TableHead>Barcode</TableHead>
                     <TableHead>PID_ID</TableHead>
-                    <TableHead>Test</TableHead>
                     <TableHead>Einheit</TableHead>
                     <TableHead>Gerät</TableHead>
                     <TableHead>Ja</TableHead>
@@ -222,7 +205,6 @@ const handleSearch = () => {
                       <TableCell className="font-medium">{result.test}</TableCell>
                       <TableCell>{result.barcode}</TableCell>
                       <TableCell>{result.pidId}</TableCell>
-                      <TableCell>{result.test}</TableCell>
                       <TableCell>{result.einheit}</TableCell>
                       <TableCell>{result.geraet}</TableCell>
                       <TableCell>
