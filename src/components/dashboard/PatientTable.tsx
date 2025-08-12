@@ -96,26 +96,55 @@ export function PatientTable({ onPatientSelect }: PatientTableProps) {
                     </AvatarFallback>
                   </Avatar>
 
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-lg sm:text-xl font-semibold text-foreground truncate">
-                      {patient.lastname}, {patient.firstname}
-                    </h3>
+                  <div className="flex-1 min-w-0 w-full">
+                    {/* Mobile: stacked */}
+                    <div className="sm:hidden">
+                      <h3 className="text-lg sm:text-xl font-semibold text-foreground truncate">
+                        {patient.lastname}, {patient.firstname}
+                      </h3>
 
-                    <div className="mt-2 flex flex-wrap gap-3">
-                      <Badge variant="outline" className="font-medium px-3 py-1 text-sm sm:text-base">PID {patient.pid}</Badge>
-                      <Badge variant="secondary" className="px-3 py-1 text-sm sm:text-base">{patient.gender}</Badge>
-                      <Badge variant="secondary" className="inline-flex items-center gap-1 px-3 py-1 text-sm sm:text-base">
-                        <FlaskConical className="h-4 w-4" />
-                        {patient.testCount} Tests
-                      </Badge>
+                      <div className="mt-2 flex flex-wrap gap-3">
+                        <Badge variant="outline" className="font-medium px-3 py-1 text-sm sm:text-base">PID {patient.pid}</Badge>
+                        <Badge variant="secondary" className="px-3 py-1 text-sm sm:text-base">{patient.gender}</Badge>
+                        <Badge variant="secondary" className="inline-flex items-center gap-1 px-3 py-1 text-sm sm:text-base">
+                          <FlaskConical className="h-4 w-4" />
+                          {patient.testCount} Tests
+                        </Badge>
+                      </div>
+
+                      <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm sm:text-base text-muted-foreground">
+                        <span className="inline-flex items-center gap-2 rounded-md bg-muted px-2.5 py-1.5 font-mono text-sm sm:text-base text-foreground border border-border tracking-wider">
+                          <Barcode className="h-4 w-4 text-muted-foreground" />
+                          {patient.barcode}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <Clock className="h-4 w-4" />
+                          {patient.timestamp}
+                        </span>
+                      </div>
                     </div>
 
-                    <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm sm:text-base text-muted-foreground">
-                      <span className="inline-flex items-center gap-2 rounded-md bg-muted px-2.5 py-1.5 font-mono text-sm sm:text-base text-foreground border border-border tracking-wider">
+                    {/* Desktop: wide grid to fill space */}
+                    <div className="hidden sm:grid grid-cols-12 gap-4 items-center w-full">
+                      <h3 className="col-span-3 text-xl font-semibold text-foreground truncate">
+                        {patient.lastname}, {patient.firstname}
+                      </h3>
+
+                      <div className="col-span-4 flex flex-wrap gap-2">
+                        <Badge variant="outline" className="font-medium px-3 py-1 text-base">PID {patient.pid}</Badge>
+                        <Badge variant="secondary" className="px-3 py-1 text-base">{patient.gender}</Badge>
+                        <Badge variant="secondary" className="inline-flex items-center gap-1 px-3 py-1 text-base">
+                          <FlaskConical className="h-4 w-4" />
+                          {patient.testCount} Tests
+                        </Badge>
+                      </div>
+
+                      <span className="col-span-3 inline-flex items-center gap-2 rounded-md bg-muted px-3 py-1.5 font-mono text-base text-foreground border border-border tracking-wider">
                         <Barcode className="h-4 w-4 text-muted-foreground" />
                         {patient.barcode}
                       </span>
-                      <span className="inline-flex items-center gap-1">
+
+                      <span className="col-span-2 inline-flex items-center gap-2 text-base text-muted-foreground">
                         <Clock className="h-4 w-4" />
                         {patient.timestamp}
                       </span>
