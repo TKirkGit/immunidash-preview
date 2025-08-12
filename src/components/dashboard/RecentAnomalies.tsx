@@ -25,7 +25,7 @@ export function RecentAnomalies() {
             {anomalies.map((a) => (
               <div
                 key={a.id}
-                onClick={() => navigate(`/details/pat${a.pid}`)}
+                onClick={() => navigate(`/patients/${a.pid}`)}
                 className="flex items-center justify-between p-3 rounded-lg border bg-muted/30 hover:bg-accent/50 transition-colors cursor-pointer"
               >
                 <div className="flex items-center gap-4">
