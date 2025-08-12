@@ -21,6 +21,7 @@ const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/patients", label: "Patienten", icon: Users },
   { href: "/search", label: "Suche", icon: Search },
+  { href: "/update", label: "Update", icon: TrendingUp },
   { href: "/tests", label: "Tests", icon: TestTubes },
   { href: "/results", label: "Ergebnisse", icon: FileText },
   { href: "/appointments", label: "Termine", icon: Calendar },
