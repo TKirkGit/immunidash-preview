@@ -76,7 +76,7 @@ const Search = () => {
     <div className="min-h-screen bg-background flex">
       <Sidebar />
       
-      <main className="flex-1 p-6 space-y-6">
+      <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
@@ -218,11 +218,11 @@ const Search = () => {
         </div>
 
         {/* Results Table */}
-        <Card>
+        <Card className="max-w-full">
           <CardHeader>
             <CardTitle>Suchergebnisse</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="max-w-full">
             <Tabs defaultValue="kompakt" className="w-full">
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="kompakt">Kompakt</TabsTrigger>
@@ -230,8 +230,8 @@ const Search = () => {
               </TabsList>
               
               <TabsContent value="kompakt">
-                <div className="overflow-x-auto">
-                  <Table>
+                <div className="overflow-x-auto max-w-full">
+                  <Table className="min-w-max">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>
@@ -259,8 +259,8 @@ const Search = () => {
               </TabsContent>
               
               <TabsContent value="erweitert">
-                <div className="overflow-x-auto">
-                  <Table>
+                <div className="overflow-x-auto max-w-full">
+                  <Table className="min-w-max">
                     <TableHeader>
                       <TableRow>
                         <TableHead>PID</TableHead>
