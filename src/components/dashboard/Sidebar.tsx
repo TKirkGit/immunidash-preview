@@ -13,7 +13,8 @@ import {
   UserCheck,
   ChevronLeft,
   ChevronRight,
-  Search
+  Search,
+  Cpu
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -23,6 +24,7 @@ const navItems = [
   { href: "/search", label: "Suche", icon: Search },
   { href: "/update", label: "Update", icon: TrendingUp },
   { href: "/tests", label: "Tests", icon: TestTubes },
+  { href: "/geraete", label: "Geräte", icon: Cpu },
   { href: "/results", label: "Ergebnisse", icon: FileText },
   { href: "/appointments", label: "Termine", icon: Calendar },
   { href: "/analytics", label: "Analytics", icon: TrendingUp },
