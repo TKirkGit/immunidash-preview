@@ -19,11 +19,11 @@ const data = [
 
 export function RevenueChart() {
   return (
-    <Card className="lg:col-span-2">
+    <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base font-semibold flex items-center gap-2">
           <Euro className="h-5 w-5 text-primary" />
-          Monatlicher Umsatz vs. Kosten
+          Geräte Auslastung
         </CardTitle>
       </CardHeader>
       <CardContent className="pl-2">
