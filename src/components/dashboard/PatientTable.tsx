@@ -97,21 +97,21 @@ export function PatientTable({ onPatientSelect }: PatientTableProps) {
                   </Avatar>
 
                   <div className="flex-1 min-w-0">
-                    <h3 className="text-base sm:text-lg font-semibold text-foreground truncate">
+                    <h3 className="text-lg sm:text-xl font-semibold text-foreground truncate">
                       {patient.lastname}, {patient.firstname}
                     </h3>
 
-                    <div className="mt-2 flex flex-wrap gap-2">
-                      <Badge variant="outline" className="font-medium">PID {patient.pid}</Badge>
-                      <Badge variant="secondary">{patient.gender}</Badge>
-                      <Badge variant="secondary" className="inline-flex items-center gap-1">
-                        <FlaskConical className="h-3.5 w-3.5" />
+                    <div className="mt-2 flex flex-wrap gap-3">
+                      <Badge variant="outline" className="font-medium px-3 py-1 text-sm sm:text-base">PID {patient.pid}</Badge>
+                      <Badge variant="secondary" className="px-3 py-1 text-sm sm:text-base">{patient.gender}</Badge>
+                      <Badge variant="secondary" className="inline-flex items-center gap-1 px-3 py-1 text-sm sm:text-base">
+                        <FlaskConical className="h-4 w-4" />
                         {patient.testCount} Tests
                       </Badge>
                     </div>
 
-                    <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground sm:hidden">
-                      <span className="inline-flex items-center gap-2 rounded-md bg-muted px-2 py-1 font-mono text-sm sm:text-base text-foreground border border-border">
+                    <div className="mt-3 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm sm:text-base text-muted-foreground">
+                      <span className="inline-flex items-center gap-2 rounded-md bg-muted px-2.5 py-1.5 font-mono text-sm sm:text-base text-foreground border border-border tracking-wider">
                         <Barcode className="h-4 w-4 text-muted-foreground" />
                         {patient.barcode}
                       </span>
@@ -123,16 +123,6 @@ export function PatientTable({ onPatientSelect }: PatientTableProps) {
                   </div>
 
                   <div className="hidden sm:flex items-center gap-4 shrink-0">
-                    <div className="flex flex-col items-end text-sm text-muted-foreground">
-                      <span className="inline-flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        {patient.timestamp}
-                      </span>
-                      <span className="inline-flex items-center gap-2 rounded-md bg-muted px-2 py-1 font-mono text-base text-foreground border border-border">
-                        <Barcode className="h-4 w-4 text-muted-foreground" />
-                        {patient.barcode}
-                      </span>
-                    </div>
                     <ChevronRight className="h-5 w-5 text-muted-foreground/70" />
                   </div>
                 </div>
