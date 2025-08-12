@@ -14,6 +14,10 @@ interface Patient {
   timestamp: string;
   status: "pending" | "completed" | "urgent";
 }
+
+interface PatientTableProps {
+  onPatientSelect?: (pid: string) => void;
+}
 const patients: Patient[] = [{
   pid: "001",
   firstname: "Maria",
@@ -74,10 +78,14 @@ const statusConfig = {
     className: "bg-destructive/10 text-destructive hover:bg-destructive/20"
   }
 };
-export function PatientTable() {
+export function PatientTable({ onPatientSelect }: PatientTableProps) {
   const navigate = useNavigate();
   const handlePatientClick = (pid: string) => {
-    navigate(`/details/pat${pid}`);
+    if (onPatientSelect) {
+      onPatientSelect(pid);
+    } else {
+      navigate(`/details/pat${pid}`);
+    }
   };
   return <Card className="col-span-3">
       <CardHeader className="pb-4">
