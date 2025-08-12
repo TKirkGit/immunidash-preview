@@ -11,6 +11,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Search as SearchIcon, ChevronDown, ChevronUp, Download } from "lucide-react";
 import PageHeader from "@/components/layout/PageHeader";
+import { useNavigate } from "react-router-dom";
 
 // Download functions for search results
 const downloadSearchResultsCSV = (results: any[]) => {
@@ -153,6 +154,9 @@ const Search = () => {
     }));
     return [...base, ...more];
   });
+
+  const navigate = useNavigate();
+  const onRowClick = (pid: string) => navigate(`/patients/${pid}`);
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -339,7 +343,7 @@ const Search = () => {
                     </TableHeader>
                     <TableBody>
                       {searchResults.map((result, index) => (
-                        <TableRow key={index}>
+                        <TableRow key={index} onClick={() => onRowClick(result.pid)} className="cursor-pointer hover:bg-accent/50">
                           <TableCell className="font-medium">{result.pid}</TableCell>
                           <TableCell>{result.name}</TableCell>
                           <TableCell>{result.barcode}</TableCell>
@@ -377,7 +381,7 @@ const Search = () => {
                     </TableHeader>
                     <TableBody>
                       {searchResults.map((result, index) => (
-                        <TableRow key={index}>
+                        <TableRow key={index} onClick={() => onRowClick(result.pid)} className="cursor-pointer hover:bg-accent/50">
                           <TableCell className="font-medium">{result.pid}</TableCell>
                           <TableCell>{result.barcode}</TableCell>
                           <TableCell>{result.test}</TableCell>
