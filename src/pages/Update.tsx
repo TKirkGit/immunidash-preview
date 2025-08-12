@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Search as SearchIcon } from "lucide-react";
+import PageHeader from "@/components/layout/PageHeader";
 
 const Update = () => {
   const [searchParams, setSearchParams] = useState({
@@ -110,9 +111,7 @@ const Update = () => {
     <div className="flex min-h-screen w-full overflow-x-hidden">
       <Sidebar />
       <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Update</h1>
-        </div>
+        <PageHeader title="Update" description="Suchen und markieren Sie Testergebnisse zur Aktualisierung." />
 
         {/* Search Form */}
         <Card>

@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Search as SearchIcon, ChevronDown, ChevronUp, Download } from "lucide-react";
+import PageHeader from "@/components/layout/PageHeader";
 
 // Download functions for search results
 const downloadSearchResultsCSV = (results: any[]) => {
@@ -136,13 +137,7 @@ const Search = () => {
       <Sidebar />
       
       <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
-        {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Suche</h1>
-            <p className="text-muted-foreground">Durchsuchen Sie Patientendaten und Testergebnisse.</p>
-          </div>
-        </div>
+        <PageHeader title="Suche" description="Durchsuchen Sie Patientendaten und Testergebnisse." />
 
         {/* Search Forms */}
         <div className="grid grid-cols-1 gap-6">

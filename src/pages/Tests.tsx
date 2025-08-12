@@ -32,6 +32,7 @@ import {
   Cell,
   Legend,
 } from "recharts";
+import PageHeader from "@/components/layout/PageHeader";
 
 // Mock: Grunddaten für Messungen und Flags
 const buildMockDailyData = (days: number) => {
@@ -133,12 +134,7 @@ const Tests = () => {
       <Sidebar />
 
       <main className="flex-1 p-6 space-y-6">
-        <header className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Tests Dashboard</h1>
-            <p className="text-muted-foreground">Suchen, analysieren und überwachen Sie Labor‑Tests.</p>
-          </div>
-        </header>
+        <PageHeader title="Tests Dashboard" description="Suchen, analysieren und überwachen Sie Labor‑Tests." />
 
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="space-y-2">

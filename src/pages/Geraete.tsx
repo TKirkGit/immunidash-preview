@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
+import PageHeader from "@/components/layout/PageHeader";
 
 const Geraete = () => {
   const [device, setDevice] = useState<string>("geraet-a");
@@ -49,10 +50,7 @@ const Geraete = () => {
       <Sidebar />
 
       <main className="flex-1 p-6 space-y-6">
-        <header>
-          <h1 className="text-3xl font-bold text-foreground">Geräte</h1>
-          <p className="text-muted-foreground">Wählen Sie ein Gerät und einen Zeitraum aus und aktualisieren Sie die Ansicht.</p>
-        </header>
+        <PageHeader title="Geräte" description="Wählen Sie ein Gerät und einen Zeitraum aus und aktualisieren Sie die Ansicht." />
 
         {/* Filter */}
         <section className="grid grid-cols-1 md:grid-cols-3 gap-4">

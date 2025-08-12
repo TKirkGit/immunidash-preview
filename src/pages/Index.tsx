@@ -3,17 +3,13 @@ import { StatsCard } from "@/components/dashboard/StatsCard";
 import { TestResultsChart } from "@/components/dashboard/TestResultsChart";
 import { RevenueChart } from "@/components/dashboard/RevenueChart";
 import { RecentAppointments } from "@/components/dashboard/RecentAppointments";
-import { 
+import {
   Users, 
   TestTubes, 
   Clock, 
-  TrendingUp,
-  Bell,
-  Search,
-  Calendar
+  TrendingUp
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import PageHeader from "@/components/layout/PageHeader";
 
 const Index = () => {
   return (
@@ -22,28 +18,7 @@ const Index = () => {
       
       <main className="flex-1 p-6 space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-            <p className="text-muted-foreground">Willkommen zurück! Hier ist ein Überblick über Ihre heutigen Aktivitäten.</p>
-          </div>
-          
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input 
-                placeholder="Suchen..." 
-                className="pl-10 w-64"
-              />
-            </div>
-            <Button variant="outline" size="icon">
-              <Calendar className="h-4 w-4" />
-            </Button>
-            <Button variant="outline" size="icon">
-              <Bell className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
+        <PageHeader title="Dashboard" description="Willkommen zurück! Hier ist ein Überblick über Ihre heutigen Aktivitäten." />
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
