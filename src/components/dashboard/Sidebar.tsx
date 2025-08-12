@@ -12,13 +12,15 @@ import {
   TrendingUp,
   UserCheck,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Search
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/patients", label: "Patienten", icon: Users },
+  { href: "/search", label: "Suche", icon: Search },
   { href: "/tests", label: "Tests", icon: TestTubes },
   { href: "/results", label: "Ergebnisse", icon: FileText },
   { href: "/appointments", label: "Termine", icon: Calendar },
