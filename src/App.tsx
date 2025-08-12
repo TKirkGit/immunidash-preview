@@ -9,6 +9,7 @@ import PatientDetails from "./pages/PatientDetails";
 import Patients from "./pages/Patients";
 import Search from "./pages/Search";
 import Update from "./pages/Update";
+import Tests from "./pages/Tests";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/patients/:pid" element={<Patients />} />
           <Route path="/search" element={<Search />} />
           <Route path="/update" element={<Update />} />
+          <Route path="/tests" element={<Tests />} />
           <Route path="/details/:pid" element={<PatientDetails />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
