@@ -111,8 +111,8 @@ export function PatientTable({ onPatientSelect }: PatientTableProps) {
                     </div>
 
                     <div className="mt-2 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground sm:hidden">
-                      <span className="inline-flex items-center gap-1">
-                        <Barcode className="h-4 w-4" />
+                      <span className="inline-flex items-center gap-2 rounded-md bg-muted px-2 py-1 font-mono text-sm sm:text-base text-foreground border border-border">
+                        <Barcode className="h-4 w-4 text-muted-foreground" />
                         {patient.barcode}
                       </span>
                       <span className="inline-flex items-center gap-1">
@@ -128,8 +128,8 @@ export function PatientTable({ onPatientSelect }: PatientTableProps) {
                         <Clock className="h-4 w-4" />
                         {patient.timestamp}
                       </span>
-                      <span className="inline-flex items-center gap-1 font-mono">
-                        <Barcode className="h-4 w-4" />
+                      <span className="inline-flex items-center gap-2 rounded-md bg-muted px-2 py-1 font-mono text-base text-foreground border border-border">
+                        <Barcode className="h-4 w-4 text-muted-foreground" />
                         {patient.barcode}
                       </span>
                     </div>
