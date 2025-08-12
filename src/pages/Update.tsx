@@ -1,24 +1,26 @@
 import { useState } from "react";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Search as SearchIcon } from "lucide-react";
 import PageHeader from "@/components/layout/PageHeader";
+import SearchFilters, { PresetValue, type DeviceOption } from "@/components/search/SearchFilters";
+import FilterChips from "@/components/search/FilterChips";
 
 const Update = () => {
-  const [searchParams, setSearchParams] = useState({
-    vonDatum: "",
-    bisDatum: "",
-    geraet: "",
-    vonUhrzeit: "",
-    bisUhrzeit: ""
-  });
+const [query, setQuery] = useState("");
+const [device, setDevice] = useState("");
+const [preset, setPreset] = useState<PresetValue>("24h");
+const [from, setFrom] = useState("");
+const [to, setTo] = useState("");
+const deviceOptions: DeviceOption[] = [
+  { value: "sysmex-xn-1000", label: "Sysmex XN-1000" },
+  { value: "cobas-8000", label: "Cobas 8000" },
+  { value: "architect-i2000sr", label: "Architect i2000SR" },
+  { value: "vitros-5600", label: "Vitros 5600" },
+];
 
   // Mock data for the table
   const [testResults, setTestResults] = useState([
@@ -69,9 +71,9 @@ const Update = () => {
     }
   ]);
 
-  const handleSearch = () => {
-    console.log("Suche ausgeführt mit:", searchParams);
-  };
+const handleSearch = () => {
+  console.log("Suche ausgeführt mit:", { query, device, preset, from, to });
+};
 
   const handleStatusUpdate = (id: number) => {
     setTestResults(prev => 
@@ -107,81 +109,55 @@ const Update = () => {
     return <Badge variant="default">{status}</Badge>;
   };
 
+  // Active filter chips
+  const chips: { key: string; label: string; onRemove: () => void }[] = [];
+  if (query) {
+    chips.push({ key: "query", label: `Suche: ${query}`, onRemove: () => setQuery("") });
+  }
+  if (device) {
+    const label = deviceOptions.find((d) => d.value === device)?.label ?? device;
+    chips.push({ key: "device", label: `Gerät: ${label}`, onRemove: () => setDevice("") });
+  }
+  if (preset !== "custom") {
+    const presetLabel = preset === "24h" ? "24h" : preset === "7d" ? "7 Tage" : "30 Tage";
+    chips.push({ key: "preset", label: `Zeitraum: ${presetLabel}`, onRemove: () => setPreset("24h") });
+  } else if (from || to) {
+    const range = `${from || "?"} – ${to || "?"}`;
+    chips.push({ key: "range", label: `Zeitraum: ${range}`, onRemove: () => { setFrom(""); setTo(""); setPreset("24h"); } });
+  }
+
   return (
     <div className="flex min-h-screen w-full overflow-x-hidden">
       <Sidebar />
       <main className="flex-1 p-6 space-y-6 overflow-x-hidden">
         <PageHeader title="Update" description="Suchen und markieren Sie Testergebnisse zur Aktualisierung." />
 
-        {/* Search Form */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Suchparameter</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div>
-                <Label htmlFor="vonDatum">Von Datum</Label>
-                <Input
-                  id="vonDatum"
-                  type="date"
-                  value={searchParams.vonDatum}
-                  onChange={(e) => setSearchParams(prev => ({ ...prev, vonDatum: e.target.value }))}
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="bisDatum">Bis Datum</Label>
-                <Input
-                  id="bisDatum"
-                  type="date"
-                  value={searchParams.bisDatum}
-                  onChange={(e) => setSearchParams(prev => ({ ...prev, bisDatum: e.target.value }))}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="geraet">Gerät auswählen</Label>
-                <Select value={searchParams.geraet} onValueChange={(value) => setSearchParams(prev => ({ ...prev, geraet: value }))}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Gerät auswählen" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="sysmex-xn-1000">Sysmex XN-1000</SelectItem>
-                    <SelectItem value="cobas-8000">Cobas 8000</SelectItem>
-                    <SelectItem value="architect-i2000sr">Architect i2000SR</SelectItem>
-                    <SelectItem value="vitros-5600">Vitros 5600</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label htmlFor="vonUhrzeit">Von Uhrzeit</Label>
-                <Input
-                  id="vonUhrzeit"
-                  type="time"
-                  value={searchParams.vonUhrzeit}
-                  onChange={(e) => setSearchParams(prev => ({ ...prev, vonUhrzeit: e.target.value }))}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="bisUhrzeit">Bis Uhrzeit</Label>
-                <Input
-                  id="bisUhrzeit"
-                  type="time"
-                  value={searchParams.bisUhrzeit}
-                  onChange={(e) => setSearchParams(prev => ({ ...prev, bisUhrzeit: e.target.value }))}
-                />
-              </div>
-            </div>
-
-            <Button onClick={handleSearch} className="w-full md:w-auto">
-              <SearchIcon className="h-4 w-4 mr-2" />
-              Suchen
-            </Button>
-          </CardContent>
-        </Card>
+<SearchFilters
+  title="Suche"
+  showQuery
+  query={query}
+  onQueryChange={setQuery}
+  showDevice
+  device={device}
+  onDeviceChange={setDevice}
+  preset={preset}
+  onPresetChange={setPreset}
+  from={from}
+  to={to}
+  onFromChange={setFrom}
+  onToChange={setTo}
+  onSubmit={handleSearch}
+  onReset={() => {
+    setQuery("");
+    setDevice("");
+    setPreset("24h");
+    setFrom("");
+    setTo("");
+  }}
+/>
+<div>
+  <FilterChips chips={chips} />
+</div>
 
         {/* Results Table */}
         <Card className="max-w-full">
