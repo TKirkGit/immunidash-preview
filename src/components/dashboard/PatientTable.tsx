@@ -3,56 +3,69 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Users, FileText, Phone } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Patient {
-  id: string;
-  name: string;
-  age: number;
-  testType: string;
+  pid: string;
+  firstname: string;
+  lastname: string;
+  gender: "M" | "W" | "D";
+  testCount: number;
+  barcode: string;
+  timestamp: string;
   status: "pending" | "completed" | "urgent";
-  date: string;
 }
 
 const patients: Patient[] = [
   {
-    id: "1",
-    name: "Maria Schmidt",
-    age: 45,
-    testType: "Blutbild komplett",
-    status: "completed",
-    date: "08.01.2025"
+    pid: "001",
+    firstname: "Maria",
+    lastname: "Schmidt",
+    gender: "W",
+    testCount: 3,
+    barcode: "BC001234567",
+    timestamp: "08.01.2025 14:30",
+    status: "completed"
   },
   {
-    id: "2",
-    name: "Thomas Weber",
-    age: 38,
-    testType: "Allergietest",
-    status: "pending",
-    date: "08.01.2025"
+    pid: "002",
+    firstname: "Thomas",
+    lastname: "Weber",
+    gender: "M",
+    testCount: 2,
+    barcode: "BC001234568",
+    timestamp: "08.01.2025 13:15",
+    status: "pending"
   },
   {
-    id: "3",
-    name: "Anna Müller",
-    age: 52,
-    testType: "Vitamin D",
-    status: "urgent",
-    date: "07.01.2025"
+    pid: "003",
+    firstname: "Anna",
+    lastname: "Müller",
+    gender: "W",
+    testCount: 1,
+    barcode: "BC001234569",
+    timestamp: "07.01.2025 16:45",
+    status: "urgent"
   },
   {
-    id: "4",
-    name: "Peter Hoffmann",
-    age: 61,
-    testType: "Schilddrüse",
-    status: "completed",
-    date: "07.01.2025"
+    pid: "004",
+    firstname: "Peter",
+    lastname: "Hoffmann",
+    gender: "M",
+    testCount: 4,
+    barcode: "BC001234570",
+    timestamp: "07.01.2025 11:20",
+    status: "completed"
   },
   {
-    id: "5",
-    name: "Lisa Braun",
-    age: 29,
-    testType: "Mikrobiom",
-    status: "pending",
-    date: "07.01.2025"
+    pid: "005",
+    firstname: "Lisa",
+    lastname: "Braun",
+    gender: "W",
+    testCount: 2,
+    barcode: "BC001234571",
+    timestamp: "07.01.2025 09:30",
+    status: "pending"
   }
 ];
 
@@ -63,6 +76,12 @@ const statusConfig = {
 };
 
 export function PatientTable() {
+  const navigate = useNavigate();
+
+  const handlePatientClick = (pid: string) => {
+    navigate(`/details/pat${pid}`);
+  };
+
   return (
     <Card className="col-span-3">
       <CardHeader className="pb-4">
@@ -75,17 +94,34 @@ export function PatientTable() {
         <div className="overflow-hidden">
           <div className="space-y-4">
             {patients.map((patient) => (
-              <div key={patient.id} className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
+              <div 
+                key={patient.pid} 
+                onClick={() => handlePatientClick(patient.pid)}
+                className="flex items-center justify-between p-4 rounded-lg border bg-card hover:bg-accent/50 transition-colors cursor-pointer"
+              >
                 <div className="flex items-center gap-4">
                   <Avatar className="h-12 w-12">
                     <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                      {patient.name.split(' ').map(n => n[0]).join('')}
+                      {patient.firstname[0]}{patient.lastname[0]}
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p className="font-medium text-foreground">{patient.name}</p>
-                    <p className="text-sm text-muted-foreground">{patient.age} Jahre • {patient.testType}</p>
-                    <p className="text-xs text-muted-foreground">{patient.date}</p>
+                    <p className="font-medium text-foreground">
+                      <span className="text-xs text-muted-foreground">PID:</span> {patient.pid}
+                    </p>
+                    <p className="font-medium text-foreground">
+                      <span className="text-xs text-muted-foreground">Name:</span> {patient.lastname}, {patient.firstname}
+                    </p>
+                    <div className="flex gap-4 text-sm text-muted-foreground">
+                      <span><span className="text-xs">Geschlecht:</span> {patient.gender}</span>
+                      <span><span className="text-xs">Tests:</span> {patient.testCount}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      <span>Barcode:</span> {patient.barcode}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      <span>Zeitstempel:</span> {patient.timestamp}
+                    </p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -93,10 +129,10 @@ export function PatientTable() {
                     {statusConfig[patient.status].label}
                   </Badge>
                   <div className="flex gap-2">
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="sm" onClick={(e) => e.stopPropagation()}>
                       <FileText className="h-4 w-4" />
                     </Button>
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="sm" onClick={(e) => e.stopPropagation()}>
                       <Phone className="h-4 w-4" />
                     </Button>
                   </div>

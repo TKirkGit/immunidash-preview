@@ -55,5 +55,35 @@ const statusConfig = {
   }
 };
 export function RecentActivity() {
-  return;
+  return (
+    <Card>
+      <CardHeader className="pb-4">
+        <CardTitle className="flex items-center gap-2">
+          <Clock className="h-5 w-5 text-primary" />
+          Letzte Aktivitäten
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {activities.map((activity) => (
+            <div key={activity.id} className="flex items-center gap-4 p-3 rounded-lg border bg-card hover:bg-accent/50 transition-colors">
+              <Avatar className="h-10 w-10">
+                <AvatarFallback className="bg-primary/10 text-primary font-semibold text-xs">
+                  {activity.patient.split(' ').map(n => n[0]).join('')}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">{activity.patient}</p>
+                <p className="text-xs text-muted-foreground truncate">{activity.action}</p>
+                <p className="text-xs text-muted-foreground">{activity.time}</p>
+              </div>
+              <Badge className={statusConfig[activity.status].className} variant="secondary">
+                {statusConfig[activity.status].label}
+              </Badge>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
 }
