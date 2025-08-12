@@ -6,7 +6,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 type Anomaly = { id: number; pid: string; barcode: string; labnr: string; zeit: string };
 
 const anomalies: Anomaly[] = [
-  { id: 1, pid: "1000555", barcode: "50957780", labnr: "2506241609", zeit: "09:12" },
+  { id: 1, pid: "001", barcode: "50957780", labnr: "2506241609", zeit: "09:12" },
   // ...
 ];
 
