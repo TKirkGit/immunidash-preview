@@ -29,7 +29,7 @@ export function TestResultsChart() {
       </CardHeader>
       <CardContent className="graph-big">
         {mode === "chart" ? (
-          <div className="h-80">
+          <div className="graph-content">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -65,7 +65,7 @@ export function TestResultsChart() {
             </ResponsiveContainer>
           </div>
         ) : (
-          <div className="h-80 overflow-x-auto overflow-y-auto max-w-full">
+          <div className="graph-content graph-scroll max-w-full">
             <Table aria-label="Wöchentliche Teststatistiken Tabelle">
               <TableHeader>
                 <TableRow>

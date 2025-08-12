@@ -61,6 +61,10 @@ All colors MUST be HSL.
     --sidebar-border: 220 13% 91%;
 
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* Graph heights */
+    --graph-height-big: 20rem;
+    --graph-height-small: 16rem;
   }
 
   .dark {
@@ -127,5 +131,19 @@ All colors MUST be HSL.
   }
   .graph-small {
     @apply relative w-full; /* container for small graphs */
+  }
+
+  /* Content area heights controlled by design tokens */
+  .graph-big .graph-content {
+    height: var(--graph-height-big);
+  }
+  .graph-small .graph-content {
+    height: var(--graph-height-small);
+  }
+
+  /* Scroll wrapper for table views to avoid card resizing */
+  .graph-scroll {
+    overflow-x: auto;
+    overflow-y: auto;
   }
 }
