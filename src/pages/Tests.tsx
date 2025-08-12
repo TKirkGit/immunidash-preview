@@ -31,6 +31,8 @@ import {
   Pie,
   Cell,
   Legend,
+  LineChart,
+  Line,
 } from "recharts";
 import PageHeader from "@/components/layout/PageHeader";
 
@@ -60,6 +62,14 @@ const FLAG_COLORS: Record<string, string> = {
   kritisch: "hsl(var(--destructive))",
   niedrig: "hsl(var(--muted))",
 };
+
+// Gerätevergleich (mock): Messungen pro Gerät für ausgewählten Test
+const DEVICE_COMPARISON = [
+  { device: "Gerät A", measurements: 340 },
+  { device: "Gerät B", measurements: 290 },
+  { device: "Gerät C", measurements: 380 },
+  { device: "Gerät D", measurements: 260 },
+];
 
 // Mock-Datenbestand für Tests (simuliert serverseitige Suche)
 const MOCK_TESTS = Array.from({ length: 120 }).map((_, i) => ({
@@ -114,7 +124,10 @@ const Tests = () => {
 
   // Daten für Diagramme basierend auf Zeitraum
   const dailyData = useMemo(() => buildMockDailyData(parseInt(timeframe, 10)), [timeframe, refreshKey]);
-
+  const tatData = useMemo(
+    () => dailyData.map((d) => ({ day: d.day, tat: 8 + Math.floor(Math.random() * 10) })),
+    [dailyData]
+  );
   // Simulierte serverseitige Suche (Debounce)
   useEffect(() => {
     let handle: number | undefined;
@@ -217,34 +230,37 @@ const Tests = () => {
           </Card>
         </section>
 
-        {/* Suchergebnisse */}
-        <section className="space-y-3">
-          <h2 className="text-lg font-semibold text-foreground">Suchergebnisse</h2>
+        {/* Zusätzliche Diagramme */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card>
-            <CardContent className="pt-6">
-              <div className="text-sm text-muted-foreground mb-3">
-                {loading ? "Suche läuft…" : query ? `${results.length} Ergebnisse für "${query}"` : "Geben Sie einen Suchbegriff ein."}
-              </div>
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>ID</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Flag</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {results.map((r) => (
-                      <TableRow key={r.id}>
-                        <TableCell className="font-medium">{r.id}</TableCell>
-                        <TableCell>{r.name}</TableCell>
-                        <TableCell>{r.flag}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
+            <CardHeader className="pb-2">
+              <CardTitle>Gerätevergleich für Test</CardTitle>
+            </CardHeader>
+            <CardContent className="pl-2">
+              <ResponsiveContainer width="100%" height={320}>
+                <BarChart data={DEVICE_COMPARISON}>
+                  <XAxis dataKey="device" />
+                  <YAxis />
+                  <Tooltip formatter={(v: number) => [v, "Messungen"]} />
+                  <Bar dataKey="measurements" fill="hsl(var(--secondary))" radius={[4,4,0,0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle>Turnaround Zeit für Test</CardTitle>
+            </CardHeader>
+            <CardContent className="pl-2">
+              <ResponsiveContainer width="100%" height={320}>
+                <LineChart data={tatData}>
+                  <XAxis dataKey="day" />
+                  <YAxis />
+                  <Tooltip formatter={(v: number) => [`${v} Std`, "TAT"]} />
+                  <Line type="monotone" dataKey="tat" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+                </LineChart>
+              </ResponsiveContainer>
             </CardContent>
           </Card>
         </section>
