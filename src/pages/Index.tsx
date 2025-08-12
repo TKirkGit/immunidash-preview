@@ -2,6 +2,7 @@ import { Sidebar } from "@/components/dashboard/Sidebar";
 import { StatsCard } from "@/components/dashboard/StatsCard";
 import { TestResultsChart } from "@/components/dashboard/TestResultsChart";
 import { RevenueChart } from "@/components/dashboard/RevenueChart";
+import { RecentAppointments } from "@/components/dashboard/RecentAppointments";
 import { 
   Users, 
   TestTubes, 
@@ -77,9 +78,10 @@ const Index = () => {
         </div>
 
         {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <TestResultsChart />
           <RevenueChart />
+          <RecentAppointments />
         </div>
 
       </main>
