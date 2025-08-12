@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, User, TestTube, Calendar, Barcode } from "lucide-react";
+import { ArrowLeft, User, TestTube, Calendar, Barcode, Download } from "lucide-react";
 
 // Mock data - später durch echte Datenbank ersetzen
 const getTestResults = (pid: string) => {
@@ -99,6 +99,33 @@ const getTestResults = (pid: string) => {
   };
   
   return testResults[pid as keyof typeof testResults] || [];
+};
+
+// Download function for test results
+const downloadTestResults = (pid: string) => {
+  const testData = getTestResults(pid);
+  if (testData.length === 0) return;
+
+  const csvHeaders = ['PID', 'Name', 'Vorname', 'Geschlecht', 'Barcode', 'Test', 'Wert', 'Einheit', 'Zeit', 'Gerät', 'Flag', 'Labnr', 'Barcodezusatz', 'Arztkürzel', 'Material'];
+  const csvData = testData.map(test => [
+    test.pid, test.name, test.vorname, test.geschlecht, test.barcode,
+    test.test, test.wert, test.einheit, test.zeit, test.geraet,
+    test.flag, test.labnr, test.barcodezusatz, test.arztkuerzel, test.material
+  ]);
+
+  const csvContent = [csvHeaders, ...csvData]
+    .map(row => row.map(field => `"${field}"`).join(','))
+    .join('\n');
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  const url = URL.createObjectURL(blob);
+  link.setAttribute('href', url);
+  link.setAttribute('download', `testergebnisse_patient_${pid}.csv`);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 const getPatientDetails = (pid: string) => {
@@ -217,29 +244,8 @@ const PatientDetails = () => {
                   <p className="font-medium">{patient.gender}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Alter</p>
-                  <p className="font-medium">{patient.age} Jahre</p>
-                </div>
-                <div>
                   <p className="text-sm text-muted-foreground">Anzahl Tests</p>
                   <p className="font-medium">{patient.testCount}</p>
-                </div>
-              </div>
-              
-              <div className="pt-4 border-t">
-                <div className="grid grid-cols-1 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground">E-Mail</p>
-                    <p className="font-medium">{patient.email}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Telefon</p>
-                    <p className="font-medium">{patient.phone}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Adresse</p>
-                    <p className="font-medium">{patient.address}</p>
-                  </div>
                 </div>
               </div>
             </CardContent>
@@ -275,10 +281,16 @@ const PatientDetails = () => {
         {/* Test Results Table */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TestTube className="h-5 w-5 text-primary" />
-              Testergebnisse
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <TestTube className="h-5 w-5 text-primary" />
+                Testergebnisse
+              </CardTitle>
+              <Button variant="outline" size="sm" onClick={() => downloadTestResults(patient.pid)}>
+                <Download className="h-4 w-4 mr-2" />
+                Download CSV
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
