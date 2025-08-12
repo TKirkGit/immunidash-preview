@@ -111,7 +111,7 @@ const [timeTo, setTimeTo] = useState<string>("");
         <PageHeader title="Update" description="Suchen und markieren Sie Testergebnisse zur Aktualisierung." />
 
 <section className="grid grid-cols-1 md:grid-cols-12 gap-4">
-  <div className="space-y-2 md:col-span-4">
+  <div className="space-y-2 md:col-span-3 lg:col-span-4">
     <Label htmlFor="update-search">Suche</Label>
     <div className="relative">
       <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -125,7 +125,7 @@ const [timeTo, setTimeTo] = useState<string>("");
       />
     </div>
   </div>
-  <div className="space-y-2 md:col-span-3">
+  <div className="space-y-2 md:col-span-2 lg:col-span-3">
     <Label>Zeitraum</Label>
     <Select value={timeframe} onValueChange={setTimeframe}>
       <SelectTrigger className="w-full">
@@ -167,7 +167,7 @@ const [timeTo, setTimeTo] = useState<string>("");
       />
     </div>
   </div>
-  <div className="flex items-end md:col-span-1 md:justify-end">
+  <div className="flex items-end md:col-span-3 lg:col-span-1 md:justify-end">
     <Button onClick={handleSearch} className="w-full md:w-auto">Suchen</Button>
   </div>
 </section>
