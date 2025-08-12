@@ -37,7 +37,14 @@ interface SidebarProps {
 }
 
 export function Sidebar({ className }: SidebarProps) {
-  const [collapsed, setCollapsed] = useState(false);
+  const STORAGE_KEY = "sidebar:collapsed";
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem(STORAGE_KEY) === "1";
+    } catch {
+      return false;
+    }
+  });
   const location = useLocation();
 
   return (
@@ -61,7 +68,13 @@ export function Sidebar({ className }: SidebarProps) {
         <Button
           variant="ghost"
           size="sm"
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={() => {
+            const next = !collapsed;
+            setCollapsed(next);
+            try {
+              localStorage.setItem(STORAGE_KEY, next ? "1" : "0");
+            } catch {}
+          }}
           className="absolute -right-3 top-6 h-6 w-6 rounded-full border bg-background"
         >
           {collapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}

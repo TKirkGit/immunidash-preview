@@ -87,6 +87,17 @@ const SidebarProvider = React.forwardRef<
       [setOpenProp, open]
     )
 
+    // Read persisted sidebar state from cookie on mount
+    React.useEffect(() => {
+      try {
+        const match = document.cookie.match(new RegExp('(?:^|; )' + SIDEBAR_COOKIE_NAME.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&') + '=([^;]*)'))
+        if (match) {
+          const val = match[1] === 'true'
+          _setOpen(val)
+        }
+      } catch {}
+    }, [])
+
     // Helper to toggle the sidebar.
     const toggleSidebar = React.useCallback(() => {
       return isMobile
