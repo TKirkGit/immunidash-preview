@@ -63,7 +63,9 @@ const Index = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <TestResultsChart />
           <RevenueChart />
-          <RecentAnomalies />
+          <div className="lg:col-span-2">
+            <RecentAnomalies />
+          </div>
           <StabilityExceeded />
           <FastestTestRun />
           <SlowestTestRun />
