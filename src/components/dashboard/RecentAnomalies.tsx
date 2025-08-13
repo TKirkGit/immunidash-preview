@@ -26,25 +26,25 @@ export function RecentAnomalies() {
               <div
                 key={a.id}
                 onClick={() => navigate(`/patients/${a.pid}`)}
-                className="p-3 rounded-lg border bg-muted/30 hover:bg-accent/50 transition-colors cursor-pointer"
+                className="flex items-center justify-between p-3 rounded-lg border bg-muted/30 hover:bg-accent/50 transition-colors cursor-pointer"
               >
-                <div className="grid grid-cols-2 gap-3 text-sm">
-                  <div>
-                    <p className="text-xs text-muted-foreground leading-none mb-1">PID</p>
-                    <p className="font-semibold font-mono">{a.pid}</p>
+                <div className="flex items-center gap-4">
+                  <div className="min-w-[84px]">
+                    <p className="text-xs text-muted-foreground leading-none">PID</p>
+                    <p className="font-semibold text-sm font-mono">{a.pid}</p>
                   </div>
-                  <div className="flex items-center justify-end gap-2 text-muted-foreground">
-                    <Clock className="h-4 w-4" />
-                    <span className="font-mono tabular-nums">{a.zeit}</span>
+                  <div className="min-w-[140px]">
+                    <p className="text-xs text-muted-foreground leading-none">Barcode</p>
+                    <p className="text-sm font-mono">{a.barcode}</p>
                   </div>
-                  <div className="col-span-2">
-                    <p className="text-xs text-muted-foreground leading-none mb-1">Barcode</p>
-                    <p className="font-mono">{a.barcode}</p>
+                  <div className="min-w-[140px]">
+                    <p className="text-xs text-muted-foreground leading-none">Labnr</p>
+                    <p className="text-sm font-mono">{a.labnr}</p>
                   </div>
-                  <div className="col-span-2">
-                    <p className="text-xs text-muted-foreground leading-none mb-1">Labnr</p>
-                    <p className="font-mono">{a.labnr}</p>
-                  </div>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Clock className="h-4 w-4" />
+                  <span className="font-mono tabular-nums">{a.zeit}</span>
                 </div>
               </div>
             ))}
